@@ -1,97 +1,29 @@
-body {
+* {
   margin: 0;
   padding: 0;
-  background-color: #f4f7fb;
-  font-family: Arial, sans-serif;
+  box-sizing: border-box;
 }
 
-.app-container {
-  padding: 30px;
+html,
+body,
+#root {
+  min-height: 100vh;
 }
 
-.section-card {
-  background-color: white;
-  padding: 30px;
-  border-radius: 16px;
-  margin-bottom: 30px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+body {
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+
+  background-color: #F8FAF8;
+  color: #80abe7;
 }
 
-.section-card h2 {
-  margin-top: 0;
-  margin-bottom: 20px;
-}
-
-.message {
-  background-color: #eef4ff;
-  padding: 12px;
-  border-radius: 10px;
-  margin-bottom: 25px;
-}
-
-.family-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-.action-card {
-  background-color: #fafafa;
-  border: 1px solid #e2e2e2;
-  border-radius: 14px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-}
-
-.action-card h3 {
-  margin-top: 0;
-  margin-bottom: 15px;
-}
-
-.action-card input {
-  margin-bottom: 12px;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-}
-
-.action-card button {
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  background-color: #2563eb;
-  color: white;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: bold;
-}
-
-.action-card button:hover {
-  background-color: #1d4ed8;
-}
-
-.family-details {
-  margin-top: 15px;
-  background-color: white;
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-}
-
-.full-width {
-  grid-column: span 2;
-}
-
-@media (max-width: 768px) {
-
-  .family-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .full-width {
-    grid-column: span 1;
-  }
-
+button,
+input,
+textarea {
+  font: inherit;
 }

@@ -1,0 +1,83 @@
+.landing-page {
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 32px;
+
+  position: relative;
+  overflow: hidden;
+}
+
+.landing-glow {
+  position: absolute;
+
+  width: 600px;
+  height: 600px;
+
+  border-radius: 50%;
+
+  background: rgba(80, 181, 85, 0.12);
+
+  filter: blur(80px);
+
+  top: -150px;
+}
+
+.landing-content {
+  width: 100%;
+  max-width: 560px;
+
+  text-align: center;
+
+  z-index: 2;
+}
+
+.product-type {
+  color: var(--hh-secondary);
+
+  font-size: 1.1rem;
+  font-weight: 500;
+
+  margin-bottom: 30px;
+}
+
+.brand-title {
+  color: var(--hh-green);
+
+  font-size: 4rem;
+  font-weight: 800;
+
+  letter-spacing: -2px;
+
+  margin-bottom: 10px;
+}
+
+.landing-tagline {
+  color: var(--hh-text);
+
+  font-size: 1.45rem;
+  font-weight: 500;
+
+  line-height: 1.7;
+
+  max-width: 450px;
+
+  margin: 0 auto 42px;
+}
+
+.landing-description {
+  color: var(--hh-secondary);
+
+  line-height: 1.7;
+
+  margin-bottom: 40px;
+}
+
+.landing-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}

@@ -1,30 +1,56 @@
-import UserSection from "./components/UserSection";
-import HealthLogSection from "./components/HealthLogSection";
-import FamilySection from "./components/FamilySection";
-import ReminderSection from "./components/ReminderSection";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import "./App.css";
+import LandingPage from "./pages/LandingPage";
+import FeedPage from "./pages/FeedPage";
+import DashboardPage from "./pages/DashboardPage";
+import NotificationsPage from "./pages/NotificationsPage";
+import ProfilePage from "./pages/ProfilePage";
+import AddLogPage from "./pages/AddLogPage";
+import HistoryPage from "./pages/HistoryPage";
+
+import LoginPage from "./pages/auth/LoginPage";
+import RegisterPage from "./pages/auth/RegisterPage";
+
+import MainLayout from "./layouts/MainLayout";
 
 function App() {
-
   return (
+    <BrowserRouter>
+      <Routes>
 
-    <div>
+        <Route path="/" element={<LandingPage />} />
 
-      <h1>HouseHealth</h1>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
 
-      <UserSection />
+        <Route element={<MainLayout />}>
 
-      <HealthLogSection />
+          <Route path="/feed" element={<FeedPage />} />
 
-      <FamilySection />
+          <Route path="/add-log" element={<AddLogPage />} />
 
-      <ReminderSection />
+          <Route path="/dashboard" element={<DashboardPage />} />
 
-    </div>
+          <Route
+            path="/notifications"
+            element={<NotificationsPage />}
+          />
 
+          <Route
+            path="/profile"
+            element={<ProfilePage />}
+          />
+
+          <Route
+          path="/history"
+          element={<HistoryPage />}
+          />
+
+        </Route>
+
+      </Routes>
+    </BrowserRouter>
   );
-
 }
 
 export default App;

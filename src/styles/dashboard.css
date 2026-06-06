@@ -1,0 +1,68 @@
+.dashboard-header {
+  margin-bottom: 28px;
+}
+
+.dashboard-header h1 {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.dashboard-header p {
+  color: var(--hh-secondary);
+}
+
+.dashboard-card {
+  background: white;
+
+  border: 1px solid var(--hh-border);
+
+  border-radius: 20px;
+
+  padding: 24px;
+
+  margin-bottom: 18px;
+}
+
+.dashboard-label {
+  color: var(--hh-secondary);
+
+  font-size: 0.95rem;
+  font-weight: 600;
+
+  display: block;
+
+  margin-bottom: 12px;
+}
+
+.dashboard-reading {
+  font-size: 2.2rem;
+  font-weight: 700;
+
+  color: var(--hh-text);
+
+  margin-bottom: 10px;
+}
+
+.dashboard-subtext {
+  color: var(--hh-secondary);
+
+  margin-bottom: 18px;
+}
+
+.dashboard-message {
+  background: rgba(80, 181, 85, 0.1);
+
+  color: var(--hh-green);
+
+  padding: 12px 14px;
+
+  border-radius: 12px;
+
+  font-weight: 500;
+}
+
+.dashboard-trend {
+  color: var(--hh-green);
+
+  font-weight: 600;
+}
