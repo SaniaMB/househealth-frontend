@@ -1,0 +1,100 @@
+.feed-page {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.feed-header {
+  margin-bottom: 28px;
+}
+
+.feed-header h1 {
+  font-size: 2rem;
+
+  margin-bottom: 8px;
+}
+
+.feed-header p {
+  color: var(--hh-secondary);
+}
+
+.feed-card {
+  background: var(--hh-card);
+
+  border: 1px solid var(--hh-border);
+
+  border-radius: 24px;
+
+  padding: 22px;
+
+  margin-bottom: 18px;
+
+  box-shadow:
+    0 4px 12px rgba(0,0,0,0.04);
+
+  transition: 0.2s;
+}
+
+.feed-card:hover {
+  transform: translateY(-2px);
+}
+
+.feed-card-header {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  margin-bottom: 18px;
+}
+
+.feed-card-header h3 {
+  margin: 0;
+
+  font-size: 1rem;
+}
+
+.feed-card-header span {
+  color: var(--hh-secondary);
+
+  font-size: 0.85rem;
+}
+
+.feed-card-body {
+  text-align: center;
+}
+
+.activity-type {
+  color: var(--hh-secondary);
+
+  margin-bottom: 10px;
+
+  font-weight: 500;
+}
+
+.activity-value {
+  font-size: 2.4rem;
+
+  font-weight: 700;
+
+  color: var(--hh-text);
+
+  margin-bottom: 16px;
+}
+
+.status-badge {
+  display: inline-block;
+
+  background:
+    rgba(80,181,85,0.12);
+
+  color: var(--hh-green);
+
+  padding: 8px 16px;
+
+  border-radius: 999px;
+
+  font-size: 0.85rem;
+
+  font-weight: 600;
+}

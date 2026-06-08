@@ -7,9 +7,12 @@ import NotificationsPage from "./pages/NotificationsPage";
 import ProfilePage from "./pages/ProfilePage";
 import AddLogPage from "./pages/AddLogPage";
 import HistoryPage from "./pages/HistoryPage";
-
+import ProtectedRoute from "./components/shared/ProtectedRoute";
+import ReminderSettingsPage from "./pages/ReminderSettingsPage";
+import FamilyPage from "./pages/FamilyPage";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
+import MemberTrendPage from "./pages/MemberTrendPage";
 
 import MainLayout from "./layouts/MainLayout";
 
@@ -23,7 +26,18 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
 
-        <Route element={<MainLayout />}>
+        <Route
+          element={
+            <ProtectedRoute>
+              <MainLayout />
+            </ProtectedRoute>
+          }
+        >
+
+          <Route
+            path="/reminders"
+            element={<ReminderSettingsPage />}
+          />
 
           <Route path="/feed" element={<FeedPage />} />
 
@@ -44,6 +58,21 @@ function App() {
           <Route
           path="/history"
           element={<HistoryPage />}
+          />
+
+          <Route
+            path="/family"
+            element={<FamilyPage />}
+          />
+
+          <Route
+            path="/family"
+            element={<FamilyPage />}
+          />
+
+          <Route
+            path="/family/:familyId/member/:userId"
+            element={<MemberTrendPage />}
           />
 
         </Route>

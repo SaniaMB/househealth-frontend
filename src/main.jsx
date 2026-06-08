@@ -7,6 +7,7 @@ import "./styles/navigation.css";
 import "./styles/dashboard.css";
 import "./styles/feed.css";
 import "./styles/add-log.css";
+import "./styles/reminders.css";
 import App from './App.jsx'
 
 createRoot(document.getElementById('root')).render(

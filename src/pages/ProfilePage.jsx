@@ -19,7 +19,9 @@ function ProfilePage() {
         setProfile(data);
 
       } catch (error) {
+
         console.error(error);
+
       }
 
     }
@@ -40,8 +42,7 @@ function ProfilePage() {
 
     return (
       <div className="page-container">
-        <h1>Profile</h1>
-        <p>Loading...</p>
+        Loading...
       </div>
     );
 
@@ -52,8 +53,15 @@ function ProfilePage() {
 
       <div className="dashboard-card">
 
-        <div className="avatar">
-          {profile.name.charAt(0).toUpperCase()}
+        <div
+          className="avatar"
+          style={{
+            margin: "0 auto"
+          }}
+        >
+          {profile.name
+            .charAt(0)
+            .toUpperCase()}
         </div>
 
         <br />
@@ -64,22 +72,35 @@ function ProfilePage() {
           {profile.email}
         </p>
 
-        <p className="dashboard-subtext">
-          Member since{" "}
-          {new Date(
-            profile.createdAt
-          ).toLocaleDateString()}
-        </p>
-
       </div>
 
       <div className="dashboard-card">
 
+        <h3>
+          Health
+        </h3>
+
+        <br />
+
         <button
           className="primary-btn"
-          onClick={() => navigate("/history")}
+          onClick={() =>
+            navigate("/history")
+          }
         >
           View Health History
+        </button>
+
+        <br />
+        <br />
+
+        <button
+          className="secondary-btn"
+          onClick={() =>
+            navigate("/reminders")
+          }
+        >
+          Reminder Settings
         </button>
 
       </div>
