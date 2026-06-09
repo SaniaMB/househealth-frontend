@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import {
+  useParams,
+  useNavigate
+} from "react-router-dom";
 
 import {
   getMemberTrendSummary,
@@ -29,6 +32,9 @@ function MemberTrendPage() {
     userId,
   } = useParams();
 
+  const navigate =
+    useNavigate();
+
   const [summary, setSummary] =
     useState(null);
 
@@ -46,9 +52,10 @@ function MemberTrendPage() {
 
         setSummary(data);
 
-      }
-      catch (error) {
+      } catch (error) {
+
         console.error(error);
+
       }
 
     }
@@ -71,7 +78,21 @@ function MemberTrendPage() {
 
     <div className="page-container">
 
-      <h1>
+      <button
+        className="secondary-btn"
+        onClick={() =>
+          navigate(-1)
+        }
+      >
+        Back
+      </button>
+
+      <h1
+        style={{
+          marginTop: "18px",
+          marginBottom: "18px"
+        }}
+      >
         {summary.userName}
       </h1>
 

@@ -1,12 +1,22 @@
 import { useEffect, useState } from "react";
+
 import {
   getNotifications,
   markNotificationAsRead,
 } from "../services/notificationService";
 
+import {
+  getMyPendingInvitations,
+  acceptInvitation,
+  declineInvitation,
+} from "../services/familyInvitationService";
+
 function NotificationsPage() {
 
   const [notifications, setNotifications] =
+    useState([]);
+
+  const [pendingInvitations, setPendingInvitations] =
     useState([]);
 
   async function loadNotifications() {
@@ -20,9 +30,21 @@ function NotificationsPage() {
     }
   }
 
+    async function loadInvitations() {
+      try {
+        const data =
+          await getMyPendingInvitations();
+
+        setPendingInvitations(data);
+      } catch (error) {
+        console.error(error);
+      }
+}
+
   useEffect(() => {
-    loadNotifications();
-  }, []);
+  loadNotifications();
+  loadInvitations();
+}, []);
 
   async function handleMarkAsRead(
     notificationId
@@ -38,6 +60,36 @@ function NotificationsPage() {
     }
   }
 
+  async function handleAcceptInvitation(
+  invitationId
+) {
+  try {
+    await acceptInvitation(
+      invitationId
+    );
+
+    loadInvitations();
+    loadNotifications();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function handleDeclineInvitation(
+  invitationId
+) {
+  try {
+    await declineInvitation(
+      invitationId
+    );
+
+    loadInvitations();
+    loadNotifications();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
   return (
     <div className="page-container">
 
@@ -49,7 +101,62 @@ function NotificationsPage() {
         </p>
       </div>
 
-      {notifications.length === 0 ? (
+      {pendingInvitations.length > 0 && (
+  <>
+    <h2>Pending Invitations</h2>
+
+    {pendingInvitations.map(
+      (invitation) => (
+        <div
+          key={invitation.invitationId}
+          className="feed-card"
+        >
+          <h3>
+            {invitation.familyName}
+          </h3>
+
+          <p>
+            Invited by{" "}
+            {invitation.invitedByName}
+          </p>
+
+          <div
+            style={{
+              display: "flex",
+              gap: "10px",
+              marginTop: "12px",
+            }}
+          >
+            <button
+              className="primary-btn"
+              onClick={() =>
+                handleAcceptInvitation(
+                  invitation.invitationId
+                )
+              }
+            >
+              Accept
+            </button>
+
+            <button
+              className="secondary-btn"
+              onClick={() =>
+                handleDeclineInvitation(
+                  invitation.invitationId
+                )
+              }
+            >
+              Decline
+            </button>
+          </div>
+        </div>
+      )
+    )}
+  </>
+)}
+
+          {notifications.length === 0 &&
+      pendingInvitations.length === 0 ? (
         <div className="dashboard-card">
           <p>
             No notifications yet.

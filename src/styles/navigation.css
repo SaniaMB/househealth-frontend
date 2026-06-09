@@ -9,11 +9,9 @@
   align-items: center;
   justify-content: space-between;
 
-  background: transparent;
+  background: var(--hh-bg);
 
-  border: none;
-
-  box-shadow: none;
+  backdrop-filter: blur(8px);
 
   z-index: 100;
 }

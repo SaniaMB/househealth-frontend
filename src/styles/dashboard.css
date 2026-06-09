@@ -122,3 +122,252 @@
 
   font-weight: 600;
 }
+
+.metric-card {
+  background: white;
+
+  border: 1px solid
+    var(--hh-border);
+
+  border-radius: 20px;
+
+  padding: 24px;
+
+  margin-bottom: 24px;
+}
+
+.metric-card-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+.metric-card-header h2 {
+  font-size: 1.25rem;
+}
+
+.metric-chart {
+  width: 100%;
+
+  height: 260px;
+
+  margin-bottom: 20px;
+}
+
+.metric-stats-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, 1fr);
+
+  gap: 12px;
+}
+
+.metric-stat {
+  background: #f8fafc;
+
+  border: 1px solid
+    var(--hh-border);
+
+  border-radius: 14px;
+
+  padding: 14px;
+}
+
+.metric-stat-label {
+  display: block;
+
+  color: var(--hh-secondary);
+
+  font-size: 0.85rem;
+
+  margin-bottom: 6px;
+}
+
+.metric-stat strong {
+  font-size: 1.1rem;
+}
+
+.trend-badge {
+  padding: 8px 14px;
+
+  border-radius: 999px;
+
+  font-size: 0.85rem;
+
+  font-weight: 600;
+}
+
+.trend-badge.improving {
+  background:
+    rgba(80, 181, 85, 0.12);
+
+  color:
+    var(--hh-green);
+}
+
+.trend-badge.stable {
+  background:
+    rgba(59, 130, 246, 0.12);
+
+  color:
+    #2563eb;
+}
+
+.trend-badge.worsening {
+  background:
+    rgba(239, 68, 68, 0.12);
+
+  color:
+    #dc2626;
+}
+
+.metric-card.blood-pressure {
+  background: linear-gradient(
+    135deg,
+    #f8fafc,
+    #eef6ff
+  );
+}
+
+.metric-card.fasting-sugar {
+  background: linear-gradient(
+    135deg,
+    #f8fafc,
+    #eef6ff
+  );
+}
+
+.metric-card.post-meal-sugar {
+  background: linear-gradient(
+    135deg,
+    #f8fafc,
+    #eef6ff
+  );
+}
+
+.trend-badge.improving {
+  background:
+    rgba(80, 181, 85, 0.18);
+
+  color:
+    var(--hh-green);
+
+  box-shadow:
+    0 0 0 1px
+    rgba(80,181,85,0.15);
+}
+
+.metric-stat strong {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.unlock-trends-content {
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+}
+
+.unlock-label {
+  color: var(--hh-secondary);
+
+  font-size: 0.9rem;
+}
+
+.unlock-latest-value {
+  font-size: 2rem;
+
+  font-weight: 700;
+
+  color: var(--hh-text);
+
+  margin: 0;
+}
+
+.unlock-message {
+  margin-top: 8px;
+
+  padding: 14px 16px;
+
+  border-radius: 14px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(80,181,85,0.12),
+    rgba(80,181,85,0.05)
+  );
+
+  border: 1px solid
+    rgba(80,181,85,0.15);
+}
+
+.unlock-message strong {
+  color: var(--hh-green);
+
+  font-weight: 600;
+}
+
+.care-circle-card h3 {
+  margin-bottom: 20px;
+}
+
+.care-section {
+  margin-bottom: 20px;
+}
+
+.care-section:last-child {
+  margin-bottom: 0;
+}
+
+.care-section-title {
+  display: block;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  color: var(--hh-secondary);
+
+  margin-bottom: 12px;
+}
+
+.care-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.care-person {
+
+  display: inline-block;
+
+  background:
+    rgba(80,181,85,0.12);
+
+  color:
+    var(--hh-green);
+
+  border:
+    1px solid
+    rgba(80,181,85,0.08);
+
+  padding:
+    8px 16px;
+
+  border-radius: 999px;
+
+  font-size: 0.85rem;
+
+  font-weight: 600;
+}
+
+.care-empty {
+  color: var(--hh-secondary);
+
+  font-size: 0.9rem;
+}

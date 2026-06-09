@@ -1,10 +1,22 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getProfile } from "../services/profileService";
+import {
+  getUsersIObserve,
+  getMyObservers
+} from "../services/careRelationshipService";
 
 function ProfilePage() {
 
   const [profile, setProfile] = useState(null);
+
+  const [peopleUnderMyCare,
+      setPeopleUnderMyCare] =
+      useState([]);
+
+    const [myObservers,
+      setMyObservers] =
+      useState([]);
 
   const navigate = useNavigate();
 
@@ -14,9 +26,27 @@ function ProfilePage() {
 
       try {
 
-        const data = await getProfile();
+        const [
+              profileData,
+              observedData,
+              observerData
+            ] = await Promise.all([
+              getProfile(),
+              getUsersIObserve(),
+              getMyObservers()
+            ]);
 
-        setProfile(data);
+            setProfile(
+              profileData
+            );
+
+            setPeopleUnderMyCare(
+              observedData
+            );
+
+            setMyObservers(
+              observerData
+            );
 
       } catch (error) {
 
@@ -102,6 +132,80 @@ function ProfilePage() {
         >
           Reminder Settings
         </button>
+
+      </div>
+
+     <div className="dashboard-card care-circle-card">
+
+        <h3>
+          Care Circle
+        </h3>
+
+        <div className="care-section">
+
+          <span className="care-section-title">
+            People Under My Care
+          </span>
+
+          <div className="care-list">
+
+            {
+              peopleUnderMyCare.length === 0
+                ? (
+                    <div className="care-empty">
+                      Nobody yet
+                    </div>
+                  )
+                : (
+                    peopleUnderMyCare.map(
+                      (person) => (
+                        <div
+                          key={person.userId}
+                          className="care-person"
+                        >
+                          {person.userName}
+                        </div>
+                      )
+                    )
+                  )
+            }
+
+          </div>
+
+        </div>
+
+        <div className="care-section">
+
+          <span className="care-section-title">
+            Caring For You
+          </span>
+
+          <div className="care-list">
+
+            {
+              myObservers.length === 0
+                ? (
+                    <div className="care-empty">
+                      Nobody yet
+                    </div>
+                  )
+                : (
+                    myObservers.map(
+                      (person) => (
+                        <div
+                          key={person.userId}
+                          className="care-person"
+                        >
+                          {person.userName}
+                        </div>
+                      )
+                    )
+                  )
+            }
+
+          </div>
+
+        </div>
 
       </div>
 

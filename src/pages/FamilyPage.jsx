@@ -7,11 +7,21 @@ import {
   getMyFamilies,
   getFamilyMembers,
   createFamily,
+  removeMember,
+  addOwner,
+  leaveFamily,
+  sendFamilyInvitation
 } from "../services/familyService";
 
 import {
   getProfile,
 } from "../services/profileService";
+
+import {
+  observeUser,
+  stopObserving,
+  getUsersIObserve
+} from "../services/careRelationshipService";
 
 function FamilyPage() {
 
@@ -24,6 +34,10 @@ function FamilyPage() {
     setSelectedFamily] =
     useState(null);
 
+    const [observedUsers,
+    setObservedUsers] =
+    useState([]);
+
   const [members, setMembers] =
     useState([]);
 
@@ -31,8 +45,24 @@ function FamilyPage() {
     setCurrentUserId] =
     useState(null);
 
+  const [showCreateFamily,
+    setShowCreateFamily] =
+    useState(false);
+
+  const [showInviteMember,
+    setShowInviteMember] =
+    useState(false);
+
+  const [selectedMember,
+    setSelectedMember] =
+    useState(null);
+
   const [familyName,
     setFamilyName] =
+    useState("");
+
+  const [inviteEmail,
+    setInviteEmail] =
     useState("");
 
   useEffect(() => {
@@ -40,6 +70,8 @@ function FamilyPage() {
     loadFamilies();
 
     loadCurrentUser();
+
+    loadObservedUsers();
 
   }, []);
 
@@ -76,7 +108,72 @@ function FamilyPage() {
       console.error(error);
 
     }
+
   }
+
+  async function loadObservedUsers() {
+
+      try {
+
+        const data =
+          await getUsersIObserve();
+
+        setObservedUsers(data);
+
+      } catch (error) {
+
+        console.error(error);
+
+      }
+
+    }
+
+    function isUnderMyCare(
+      userId
+    ) {
+
+      return observedUsers.some(
+        (user) =>
+          user.userId === userId
+      );
+
+    }
+
+    async function handleCareToggle(
+      userId
+    ) {
+
+      try {
+
+        if (
+          isUnderMyCare(userId)
+        ) {
+
+          await stopObserving(
+            userId
+          );
+
+        } else {
+
+          await observeUser(
+            userId
+          );
+
+        }
+
+        await loadObservedUsers();
+
+      } catch (error) {
+
+        console.error(error);
+
+        alert(
+          "Failed to update care relationship"
+        );
+
+      }
+
+    }
 
   async function handleFamilyClick(
     family
@@ -85,6 +182,8 @@ function FamilyPage() {
     try {
 
       setSelectedFamily(family);
+
+      setSelectedMember(null);
 
       const data =
         await getFamilyMembers(
@@ -114,6 +213,10 @@ function FamilyPage() {
 
       setFamilyName("");
 
+      setShowCreateFamily(
+        false
+      );
+
       loadFamilies();
 
     } catch (error) {
@@ -122,6 +225,138 @@ function FamilyPage() {
 
       alert(
         "Failed to create family"
+      );
+
+    }
+  }
+
+  async function handleInviteMember() {
+
+    if (!inviteEmail.trim()) {
+      return;
+    }
+
+    try {
+
+      await sendFamilyInvitation(
+        selectedFamily.familyId,
+        inviteEmail
+      );
+
+      setInviteEmail("");
+
+      setShowInviteMember(
+        false
+      );
+
+      alert(
+        "Invitation sent"
+      );
+
+    } catch (error) {
+
+      console.error(error);
+
+      alert(
+        "Failed to send invitation"
+      );
+
+    }
+  }
+
+  async function handleRemoveMember(
+    userId
+  ) {
+
+    try {
+
+      await removeMember(
+        selectedFamily.familyId,
+        userId
+      );
+
+      const data =
+        await getFamilyMembers(
+          selectedFamily.familyId
+        );
+
+      setMembers(data);
+
+      setSelectedMember(null);
+
+    } catch (error) {
+
+      console.error(error);
+
+      alert(
+        "Failed to remove member"
+      );
+
+    }
+  }
+
+  async function handleMakeOwner(
+    userId
+  ) {
+
+    try {
+
+      await addOwner(
+        selectedFamily.familyId,
+        userId
+      );
+
+      const data =
+        await getFamilyMembers(
+          selectedFamily.familyId
+        );
+
+      setMembers(data);
+
+      setSelectedMember(null);
+
+    } catch (error) {
+
+      console.error(error);
+
+      alert(
+        "Failed to add owner"
+      );
+
+    }
+  }
+
+  async function handleLeaveFamily() {
+
+    const confirmed =
+      window.confirm(
+        "Leave this family?"
+      );
+
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+
+      await leaveFamily(
+        selectedFamily.familyId
+      );
+
+      setSelectedFamily(
+        null
+      );
+
+      setMembers([]);
+
+      loadFamilies();
+
+    } catch (error) {
+
+      console.error(error);
+
+      alert(
+        error.message
       );
 
     }
@@ -171,29 +406,59 @@ function FamilyPage() {
 
           ))}
 
-          <div className="family-create-card">
-
-            <input
-              type="text"
-              placeholder="Family name"
-              value={familyName}
-              onChange={(e) =>
-                setFamilyName(
-                  e.target.value
-                )
-              }
-            />
+          {!showCreateFamily && (
 
             <button
               className="primary-btn"
-              onClick={
-                handleCreateFamily
+              onClick={() =>
+                setShowCreateFamily(
+                  true
+                )
               }
             >
-              Create Family
+              + Create Family
             </button>
 
-          </div>
+          )}
+
+          {showCreateFamily && (
+
+            <div className="family-create-card">
+
+              <input
+                type="text"
+                placeholder="Family Name"
+                value={familyName}
+                onChange={(e) =>
+                  setFamilyName(
+                    e.target.value
+                  )
+                }
+              />
+
+              <button
+                className="primary-btn"
+                onClick={
+                  handleCreateFamily
+                }
+              >
+                Create
+              </button>
+
+              <button
+                className="secondary-btn"
+                onClick={() =>
+                  setShowCreateFamily(
+                    false
+                  )
+                }
+              >
+                Cancel
+              </button>
+
+            </div>
+
+          )}
 
         </>
 
@@ -213,6 +478,10 @@ function FamilyPage() {
 
               setMembers([]);
 
+              setSelectedMember(
+                null
+              );
+
             }}
           >
             Back
@@ -226,24 +495,67 @@ function FamilyPage() {
 
           </div>
 
+          {selectedFamily.owner && (
+
+            <div
+              className="family-management-card"
+            >
+
+              <button
+                className="primary-btn"
+                onClick={() =>
+                  setShowInviteMember(
+                    !showInviteMember
+                  )
+                }
+              >
+                Invite Member
+              </button>
+
+            </div>
+
+          )}
+
+          {showInviteMember && (
+
+            <div
+              className="family-create-card"
+            >
+
+              <input
+                type="email"
+                placeholder="Email Address"
+                value={inviteEmail}
+                onChange={(e) =>
+                  setInviteEmail(
+                    e.target.value
+                  )
+                }
+              />
+
+              <button
+                className="primary-btn"
+                onClick={
+                  handleInviteMember
+                }
+              >
+                Send Invite
+              </button>
+
+            </div>
+
+          )}
+
           {members.map((member) => (
 
             <div
               key={member.userId}
               className="family-member-card"
-              onClick={() => {
-
-                if (
-                  member.userId === currentUserId
-                ) {
-                  return;
-                }
-
-                navigate(
-                  `/family/${selectedFamily.familyId}/member/${member.userId}`
-                );
-
-              }}
+              onClick={() =>
+                setSelectedMember(
+                  member
+                )
+              }
             >
 
               <div className="member-avatar">
@@ -262,7 +574,8 @@ function FamilyPage() {
 
                   {member.name}
 
-                  {member.userId === currentUserId &&
+                  {member.userId ===
+                    currentUserId &&
                     " (You)"}
 
                 </h4>
@@ -280,6 +593,112 @@ function FamilyPage() {
             </div>
 
           ))}
+
+          {selectedMember && (
+
+            <div
+              className="family-management-card"
+            >
+
+              <h3>
+                {selectedMember.name}
+              </h3>
+
+              {selectedMember.userId !==
+                currentUserId && (
+
+                <>
+
+                  <button
+                    className="secondary-btn"
+                    onClick={() =>
+                      navigate(
+                        `/family/${selectedFamily.familyId}/member/${selectedMember.userId}`
+                      )
+                    }
+                  >
+                    View Trends
+                  </button>
+
+                  <button
+                    className={
+                      isUnderMyCare(
+                        selectedMember.userId
+                      )
+                        ? "primary-btn"
+                        : "secondary-btn"
+                    }
+                    onClick={() =>
+                      handleCareToggle(
+                        selectedMember.userId
+                      )
+                    }
+                  >
+                    {
+                      isUnderMyCare(
+                        selectedMember.userId
+                      )
+                        ? "✓ Under My Care"
+                        : "Care For Member"
+                    }
+                  </button>
+
+                </>
+
+              )}
+
+              {selectedFamily.owner &&
+                selectedMember.userId !==
+                currentUserId && (
+
+                <>
+
+                  {!selectedMember.owner && (
+
+                    <button
+                      className="secondary-btn"
+                      onClick={() =>
+                        handleMakeOwner(
+                          selectedMember.userId
+                        )
+                      }
+                    >
+                      Make Owner
+                    </button>
+
+                  )}
+
+                  {!selectedMember.owner && (
+
+                    <button
+                      className="secondary-btn"
+                      onClick={() =>
+                        handleRemoveMember(
+                          selectedMember.userId
+                        )
+                      }
+                    >
+                      Remove Member
+                    </button>
+
+                  )}
+
+                </>
+
+              )}
+
+            </div>
+
+          )}
+
+          <button
+            className="secondary-btn leave-family-btn"
+            onClick={
+              handleLeaveFamily
+            }
+          >
+            Leave Family
+          </button>
 
         </>
 
