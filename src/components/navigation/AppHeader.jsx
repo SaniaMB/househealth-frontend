@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { IoNotificationsOutline } from "react-icons/io5";
 
 import { getProfile } from "../../services/profileService";
+import { getUnreadNotifications } from "../../services/notificationService";
 
 function AppHeader() {
 
   const [profile, setProfile] = useState(null);
+  const [unreadCount, setUnreadCount] = useState(0);
 
   const navigate = useNavigate();
 
@@ -28,7 +30,49 @@ function AppHeader() {
 
     }
 
+
+async function loadUnreadNotifications() {
+
+      try {
+
+        const notifications =
+          await getUnreadNotifications();
+
+        setUnreadCount(notifications.length);
+
+      } catch (error) {
+
+        console.error(error);
+
+      }
+
+    }
+
     loadProfile();
+    loadUnreadNotifications();
+
+    const interval =
+    setInterval(
+      loadUnreadNotifications,
+      30000
+    );
+
+    window.addEventListener(
+      "notificationsUpdated",
+      loadUnreadNotifications
+    );
+
+    return () => {
+
+      clearInterval(interval);
+
+      window.removeEventListener(
+        "notificationsUpdated",
+        loadUnreadNotifications
+      );
+
+    };
+
 
   }, []);
 
@@ -49,7 +93,15 @@ function AppHeader() {
             navigate("/notifications")
           }
         >
+
           <IoNotificationsOutline />
+
+          {unreadCount > 0 && (
+            <span className="notification-badge">
+              {unreadCount > 9 ? "9+" : unreadCount}
+            </span>
+          )}
+
         </button>
 
         <div

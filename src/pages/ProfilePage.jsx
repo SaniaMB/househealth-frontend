@@ -104,37 +104,6 @@ function ProfilePage() {
 
       </div>
 
-      <div className="dashboard-card">
-
-        <h3>
-          Health
-        </h3>
-
-        <br />
-
-        <button
-          className="primary-btn"
-          onClick={() =>
-            navigate("/history")
-          }
-        >
-          View Health History
-        </button>
-
-        <br />
-        <br />
-
-        <button
-          className="secondary-btn"
-          onClick={() =>
-            navigate("/reminders")
-          }
-        >
-          Reminder Settings
-        </button>
-
-      </div>
-
      <div className="dashboard-card care-circle-card">
 
         <h3>
@@ -206,6 +175,37 @@ function ProfilePage() {
           </div>
 
         </div>
+
+      </div>
+
+      <div className="dashboard-card">
+
+        <h3>
+          Health
+        </h3>
+
+        <br />
+
+        <button
+          className="primary-btn"
+          onClick={() =>
+            navigate("/history")
+          }
+        >
+          View Health History
+        </button>
+
+        <br />
+        <br />
+
+        <button
+          className="secondary-btn"
+          onClick={() =>
+            navigate("/reminders")
+          }
+        >
+          Reminder Settings
+        </button>
 
       </div>
 

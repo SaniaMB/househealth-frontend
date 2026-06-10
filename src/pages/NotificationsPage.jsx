@@ -11,6 +11,9 @@ import {
   declineInvitation,
 } from "../services/familyInvitationService";
 
+import "../styles/global.css";
+
+
 function NotificationsPage() {
 
   const [notifications, setNotifications] =
@@ -35,6 +38,8 @@ function NotificationsPage() {
         const data =
           await getMyPendingInvitations();
 
+          console.log("Pending invitations:", data);
+
         setPendingInvitations(data);
       } catch (error) {
         console.error(error);
@@ -55,6 +60,10 @@ function NotificationsPage() {
       );
 
       loadNotifications();
+
+      window.dispatchEvent(
+        new Event("notificationsUpdated")
+      );
     } catch (error) {
       console.error(error);
     }
@@ -104,21 +113,31 @@ async function handleDeclineInvitation(
       {pendingInvitations.length > 0 && (
   <>
     <h2>Pending Invitations</h2>
+    <><br /></>
 
     {pendingInvitations.map(
       (invitation) => (
         <div
           key={invitation.invitationId}
-          className="feed-card"
+          className="invitation-card"
         >
+          <div className="invitation-header">
+
+        <div>
+
           <h3>
             {invitation.familyName}
           </h3>
 
           <p>
-            Invited by{" "}
             {invitation.invitedByName}
+            {" "}invited you to join
+            this family.
           </p>
+
+        </div>
+
+      </div>
 
           <div
             style={{

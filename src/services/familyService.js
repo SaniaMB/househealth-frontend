@@ -255,3 +255,28 @@ export async function declineInvitation(
 
   return response.text();
 }
+
+export async function renameFamily(
+  familyId,
+  familyName
+) {
+
+  const response = await fetch(
+    `${API_BASE_URL}/api/family/${familyId}/rename-family`,
+    {
+      method: "PATCH",
+      headers: getAuthHeaders(),
+      body: JSON.stringify({
+        familyName,
+      }),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(
+      "Failed to rename family"
+    );
+  }
+
+  return response.text();
+}

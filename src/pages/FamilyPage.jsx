@@ -10,7 +10,9 @@ import {
   removeMember,
   addOwner,
   leaveFamily,
-  sendFamilyInvitation
+  sendFamilyInvitation,
+  renameFamily,
+  transferOwnership
 } from "../services/familyService";
 
 import {
@@ -65,15 +67,31 @@ function FamilyPage() {
     setInviteEmail] =
     useState("");
 
-  useEffect(() => {
+    const [showRenameFamily,
+    setShowRenameFamily] =
+    useState(false);
 
-    loadFamilies();
+    const [newFamilyName,
+      setNewFamilyName] =
+      useState("");
 
-    loadCurrentUser();
+      const [showTransferOwnership,
+      setShowTransferOwnership] =
+      useState(false);
 
-    loadObservedUsers();
+      const [newOwnerId,
+      setNewOwnerId] =
+      useState(null);
 
-  }, []);
+      useEffect(() => {
+
+        loadFamilies();
+
+        loadCurrentUser();
+
+        loadObservedUsers();
+
+      }, []);
 
   async function loadCurrentUser() {
 
@@ -127,6 +145,11 @@ function FamilyPage() {
       }
 
     }
+
+    const ownerCount =
+      members.filter(
+        (member) => member.owner
+      ).length;
 
     function isUnderMyCare(
       userId
@@ -270,6 +293,15 @@ function FamilyPage() {
 
     try {
 
+        const confirmed =
+        window.confirm(
+          `Remove ${selectedMember.name} from this family?`
+        );
+
+      if (!confirmed) {
+        return;
+      }
+
       await removeMember(
         selectedFamily.familyId,
         userId
@@ -299,6 +331,15 @@ function FamilyPage() {
     userId
   ) {
 
+    const confirmed =
+      window.confirm(
+        `${selectedMember.name} will become an owner. Continue?`
+      );
+
+    if (!confirmed) {
+      return;
+    }
+
     try {
 
       await addOwner(
@@ -326,30 +367,149 @@ function FamilyPage() {
     }
   }
 
+  async function handleRenameFamily() {
+
+  if (!newFamilyName.trim()) {
+    return;
+  }
+
+  try {
+
+    await renameFamily(
+      selectedFamily.familyId,
+      newFamilyName
+    );
+
+    setSelectedFamily({
+      ...selectedFamily,
+      familyName: newFamilyName
+    });
+
+    setFamilies(
+      families.map((family) =>
+        family.familyId ===
+        selectedFamily.familyId
+          ? {
+              ...family,
+              familyName:
+                newFamilyName
+            }
+          : family
+      )
+    );
+
+    setNewFamilyName("");
+
+    setShowRenameFamily(
+      false
+    );
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      "Failed to rename family"
+    );
+
+  }
+
+}
+
+async function handleTransferOwnershipAndLeave() {
+
+  if (!newOwnerId) {
+
+    alert(
+      "Select a new owner"
+    );
+
+    return;
+  }
+
+  try {
+
+    await transferOwnership(
+      selectedFamily.familyId,
+      newOwnerId
+    );
+
+    await leaveFamily(
+      selectedFamily.familyId
+    );
+
+    setShowTransferOwnership(
+      false
+    );
+
+    setNewOwnerId(
+      null
+    );
+
+    setSelectedFamily(
+      null
+    );
+
+    setMembers([]);
+
+    setSelectedMember(
+      null
+    );
+
+    loadFamilies();
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      "Failed to transfer ownership"
+    );
+
+  }
+
+}
+
   async function handleLeaveFamily() {
 
-    const confirmed =
-      window.confirm(
-        "Leave this family?"
+    if (
+      selectedFamily.owner &&
+      ownerCount === 1 &&
+      members.length > 1
+    ) {
+
+      setShowTransferOwnership(
+        true
       );
 
-    if (!confirmed) {
       return;
     }
-
     try {
+
+      const confirmed =
+        window.confirm(
+          "Leave this family?"
+        );
+
+      if (!confirmed) {
+        return;
+      }
 
       await leaveFamily(
         selectedFamily.familyId
       );
 
-      setSelectedFamily(
-        null
-      );
+    setSelectedFamily(
+      null
+    );
 
-      setMembers([]);
+    setMembers([]);
 
-      loadFamilies();
+    setSelectedMember(
+      null
+    );
+
+    loadFamilies();
 
     } catch (error) {
 
@@ -467,54 +627,20 @@ function FamilyPage() {
       {selectedFamily && (
 
         <>
-
-          <button
-            className="secondary-btn"
-            onClick={() => {
-
-              setSelectedFamily(
-                null
-              );
-
-              setMembers([]);
-
-              setSelectedMember(
-                null
-              );
-
-            }}
-          >
-            Back
-          </button>
-
           <div className="family-details-header">
 
             <h2>
               {selectedFamily.familyName}
             </h2>
 
+            <p>
+              {members.length} member
+              {members.length !== 1
+                ? "s"
+                : ""}
+            </p>
+
           </div>
-
-          {selectedFamily.owner && (
-
-            <div
-              className="family-management-card"
-            >
-
-              <button
-                className="primary-btn"
-                onClick={() =>
-                  setShowInviteMember(
-                    !showInviteMember
-                  )
-                }
-              >
-                Invite Member
-              </button>
-
-            </div>
-
-          )}
 
           {showInviteMember && (
 
@@ -593,6 +719,62 @@ function FamilyPage() {
             </div>
 
           ))}
+
+          {showTransferOwnership && (
+
+            <div
+              className="family-management-card"
+            >
+
+              <h3>
+                Transfer Ownership Required
+              </h3>
+
+              <p>
+                You are the only owner of this
+                family. Choose a new owner
+                before leaving.
+              </p>
+
+              {members
+                .filter(
+                  (member) =>
+                    member.userId !==
+                    currentUserId
+                )
+                .map((member) => (
+
+                  <button
+                    key={member.userId}
+                    className={
+                      newOwnerId ===
+                      member.userId
+                        ? "primary-btn"
+                        : "secondary-btn"
+                    }
+                    onClick={() =>
+                      setNewOwnerId(
+                        member.userId
+                      )
+                    }
+                  >
+                    {member.name}
+                  </button>
+
+                ))}
+
+                <button
+                  className="primary-btn"
+                  onClick={
+                    handleTransferOwnershipAndLeave
+                  }
+                >
+                  Transfer Ownership & Leave
+                </button>
+
+            </div>
+
+          )}
 
           {selectedMember && (
 
@@ -691,14 +873,103 @@ function FamilyPage() {
 
           )}
 
-          <button
-            className="secondary-btn leave-family-btn"
-            onClick={
-              handleLeaveFamily
-            }
-          >
-            Leave Family
-          </button>
+          <div className="family-management-card">
+
+            <h3>
+              Family Management
+            </h3>
+
+            {selectedFamily.owner && (
+
+              <>
+
+                <button
+                  className="primary-btn"
+                  onClick={() =>
+                    setShowInviteMember(
+                      !showInviteMember
+                    )
+                  }
+                >
+                  Invite Member
+                </button>
+
+                <button
+                  className="secondary-btn"
+                  onClick={() => {
+
+                    setNewFamilyName(
+                      selectedFamily.familyName
+                    );
+
+                    setShowRenameFamily(
+                      !showRenameFamily
+                    );
+
+                  }}
+                >
+                  Rename Family
+                </button>
+
+              </>
+
+            )}
+
+              {showRenameFamily && (
+
+              <div
+                className="family-create-card"
+              >
+
+                <input
+                  type="text"
+                  placeholder="New Family Name"
+                  value={newFamilyName}
+                  onChange={(e) =>
+                    setNewFamilyName(
+                      e.target.value
+                    )
+                  }
+                />
+
+                <button
+                  className="primary-btn"
+                  onClick={
+                    handleRenameFamily
+                  }
+                >
+                  Save Name
+                </button>
+
+              </div>
+
+            )}
+
+            <button
+              className="secondary-btn"
+              onClick={() => {
+
+                setSelectedFamily(null);
+
+                setMembers([]);
+
+                setSelectedMember(null);
+
+              }}
+            >
+              ← My Families
+            </button>
+
+            <button
+              className="secondary-btn leave-family-btn"
+              onClick={
+                handleLeaveFamily
+              }
+            >
+              Leave Family
+            </button>
+
+          </div>
 
         </>
 

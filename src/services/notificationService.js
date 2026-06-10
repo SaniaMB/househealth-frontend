@@ -31,3 +31,19 @@ export async function markNotificationAsRead(
     throw new Error("Failed to mark notification as read");
   }
 }
+
+export async function getUnreadNotifications() {
+
+  const response = await fetch(
+    `${API_BASE_URL}/api/notifications/unread`,
+    {
+      headers: getAuthHeaders(),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to load unread notifications");
+  }
+
+  return response.json();
+}
