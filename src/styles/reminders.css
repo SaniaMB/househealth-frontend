@@ -1,23 +1,285 @@
+/* ── Summary Card ───────────────────────── */
+
+.reminder-summary-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  padding: 22px;
+
+  margin-bottom: 22px;
+
+  background: #fafdfb;
+
+  border: 1px solid rgba(61, 181, 98, 0.12);
+
+  border-radius: 24px;
+}
+
+.reminder-summary-icon {
+  width: 52px;
+  height: 52px;
+
+  border-radius: 16px;
+
+  background: var(--hh-green-subtle);
+  color: var(--hh-green);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1.4rem;
+
+  flex-shrink: 0;
+}
+
+.reminder-summary-text {
+  color: var(--hh-text);
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+/* ── Metric Toggle ─────────────────────── */
+
+.reminder-metric-toggle {
+  display: flex;
+  gap: 12px;
+
+  margin-bottom: 22px;
+}
+
+.reminder-metric-btn {
+  flex: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 14px;
+
+  background: #fff;
+
+  border: 1px solid var(--hh-border);
+  border-radius: 16px;
+
+  color: var(--hh-secondary);
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.15s ease;
+}
+
+.reminder-metric-btn:hover {
+  border-color: rgba(61,181,98,0.3);
+}
+
+.reminder-metric-btn.active {
+  background: var(--hh-green-subtle);
+
+  border-color: rgba(61,181,98,0.25);
+
+  color: var(--hh-green-deep);
+}
+
+/* ── Main Card ─────────────────────────── */
+
+.reminder-card {
+  background: #fff;
+
+  border: 1px solid rgba(229,231,235,0.8);
+
+  border-radius: 24px;
+
+  padding: 28px;
+}
+
+/* ── Form ─────────────────────────────── */
+
 .reminder-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 28px;
 }
 
-.reminder-form label {
+.reminder-field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.reminder-field label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--hh-text);
+}
+
+/* ── Frequency Pills ───────────────────── */
+
+.reminder-freq-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.reminder-freq-btn {
+  padding: 14px;
+
+  background: #fff;
+
+  border: 1px solid var(--hh-border);
+
+  border-radius: 14px;
+
+  color: var(--hh-secondary);
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.15s ease;
+}
+
+.reminder-freq-btn:hover {
+  border-color: rgba(61,181,98,0.3);
+}
+
+.reminder-freq-btn.active {
+  background: #f0faf2;
+
+  border-color: rgba(61,181,98,0.25);
+
+  color: var(--hh-green-deep);
+}
+
+/* ── Interval Input ────────────────────── */
+
+.log-input-wrap {
+  position: relative;
+}
+
+.log-input-wrap input {
+  width: 100%;
+
+  padding: 14px 60px 14px 16px;
+
+  border: 1px solid var(--hh-border);
+  border-radius: 16px;
+
+  background: #fff;
+
+  outline: none;
+
+  transition: all 0.15s ease;
+}
+
+.log-input-wrap input:focus {
+  border-color: var(--hh-green);
+
+  box-shadow: 0 0 0 4px var(--hh-green-subtle);
+}
+
+.log-unit {
+  position: absolute;
+
+  top: 50%;
+  right: 16px;
+
+  transform: translateY(-50%);
+
+  color: var(--hh-secondary);
+
+  font-size: 0.9rem;
   font-weight: 600;
 }
 
-.reminder-form select,
-.reminder-form input {
-  padding: 12px;
-  border: 1px solid #E5E7EB;
-  border-radius: 8px;
-}
+/* ── Toggle ───────────────────────────── */
 
-.checkbox-row {
+.reminder-toggle-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
+
+  padding: 16px 18px;
+
+  background: #fafafa;
+
+  border: 1px solid var(--hh-border);
+
+  border-radius: 16px;
+
+  cursor: pointer;
 }
 
+.reminder-toggle-row span {
+  font-weight: 500;
+  color: var(--hh-text);
+}
+
+.reminder-toggle {
+  width: 52px;
+  height: 30px;
+
+  border-radius: 999px;
+
+  background: #d1d5db;
+
+  position: relative;
+
+  transition: background 0.2s ease;
+}
+
+.reminder-toggle.on {
+  background: linear-gradient(
+    135deg,
+    var(--hh-green),
+    var(--hh-green-deep)
+  );
+}
+
+.reminder-toggle-knob {
+  position: absolute;
+
+  top: 3px;
+  left: 3px;
+
+  width: 24px;
+  height: 24px;
+
+  border-radius: 50%;
+
+  background: #fff;
+
+  transition: transform 0.2s ease;
+}
+
+.reminder-toggle.on .reminder-toggle-knob {
+  transform: translateX(22px);
+}
+
+/* ── States ───────────────────────────── */
+
+.reminder-loading {
+  text-align: center;
+
+  padding: 30px;
+
+  color: var(--hh-secondary);
+}
+
+@media (max-width: 640px) {
+  .reminder-freq-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .reminder-metric-toggle {
+    flex-direction: column;
+  }
+
+  .reminder-card {
+    padding: 22px;
+  }
+}

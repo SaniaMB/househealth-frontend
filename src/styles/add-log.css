@@ -1,47 +1,192 @@
+/* ── Type selector ───────────────── */
+
 .log-type-selector {
   display: flex;
-
-  gap: 12px;
-
-  margin-bottom: 24px;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 .log-type-btn {
   flex: 1;
-
-  border: 1px solid var(--hh-border);
-
-  background: white;
-
-  padding: 14px;
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 1.5px solid var(--hh-border);
+  background: #fff;
+  padding: 13px;
   border-radius: 14px;
-
   cursor: pointer;
-
+  font-size: 0.9rem;
   font-weight: 600;
+  color: var(--hh-secondary);
+  transition: border-color 0.18s ease, color 0.18s ease,
+    background 0.18s ease, box-shadow 0.18s ease;
+}
+
+.log-type-btn:hover {
+  border-color: var(--hh-green);
+  color: var(--hh-green);
 }
 
 .log-type-btn.active {
-  background: var(--hh-green);
-
-  color: white;
-
-  border-color: var(--hh-green);
+  background: linear-gradient(135deg, var(--hh-green), var(--hh-green-deep));
+  color: #fff;
+  border-color: transparent;
+  box-shadow: var(--hh-shadow-green);
 }
 
-.dashboard-card form {
+.log-type-icon {
+  font-size: 1.1rem;
+}
+
+/* ── Log card ────────────────────── */
+
+.log-card {
+  animation: fadeUp 0.3s ease both;
+}
+
+.log-card-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--hh-secondary);
+  margin-bottom: 6px;
+}
+
+.log-hint {
+  font-size: 0.8rem;
+  color: var(--hh-muted);
+  background: var(--hh-bg);
+  border: 1px solid var(--hh-border);
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin-bottom: 18px;
+  line-height: 1.5;
+}
+
+/* ── Input layout ────────────────── */
+
+.log-input-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.log-input-divider {
+  font-size: 1.6rem;
+  font-weight: 300;
+  color: var(--hh-muted);
+  padding-bottom: 12px;
+  flex-shrink: 0;
+}
+
+.log-input-group {
+  flex: 1;
   display: flex;
   flex-direction: column;
-
-  gap: 12px;
+  gap: 6px;
+  margin-bottom: 16px;
 }
 
-.dashboard-card input,
-.dashboard-card select {
-  padding: 14px;
+.log-input-group label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--hh-text);
+}
 
-  border: 1px solid var(--hh-border);
+.log-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
 
+.log-input-wrap input {
+  width: 100%;
+  padding: 13px 48px 13px 14px;
+  border: 1.5px solid var(--hh-border);
+  border-radius: var(--hh-radius);
+  background: var(--hh-bg);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--hh-text);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+  outline: none;
+}
+
+.log-input-wrap input:focus {
+  border-color: var(--hh-green);
+  background: #fff;
+  box-shadow: 0 0 0 4px var(--hh-green-subtle);
+}
+
+.log-unit {
+  position: absolute;
+  right: 14px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--hh-muted);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* ── Sugar type toggle ───────────── */
+
+.log-sugar-type {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.log-sugar-type-btn {
+  flex: 1;
+  padding: 10px;
   border-radius: 12px;
+  border: 1.5px solid var(--hh-border);
+  background: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--hh-secondary);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.log-sugar-type-btn.active {
+  border-color: var(--hh-green);
+  color: var(--hh-green-deep);
+  background: var(--hh-green-subtle);
+}
+
+/* ── Feedback states ─────────────── */
+
+.log-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: var(--hh-radius-sm);
+  color: #dc2626;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  animation: shake 0.35s ease;
+}
+
+.log-success {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(61,181,98,0.08);
+  border: 1px solid rgba(61,181,98,0.2);
+  border-radius: var(--hh-radius-sm);
+  color: var(--hh-green-deep);
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  animation: fadeUp 0.3s ease;
 }

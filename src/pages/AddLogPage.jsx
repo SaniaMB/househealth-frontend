@@ -1,172 +1,222 @@
 import { useState } from "react";
 import {
+  IoHeartOutline,
+  IoWaterOutline,
+  IoCheckmarkCircle,
+} from "react-icons/io5";
+
+import {
   createBloodPressureLog,
   createBloodSugarLog,
 } from "../services/healthLogService";
 
 function AddLogPage() {
-  const [selectedType, setSelectedType] =
-    useState("BP");
+  const [selectedType, setSelectedType] = useState("BP");
 
   const [systolic, setSystolic] = useState("");
   const [diastolic, setDiastolic] = useState("");
 
   const [sugarValue, setSugarValue] = useState("");
-  const [sugarType, setSugarType] =
-    useState("FASTING");
+  const [sugarType, setSugarType] = useState("FASTING");
+
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
+
+  function showSuccess() {
+    setSuccess(true);
+    setTimeout(() => setSuccess(false), 2500);
+  }
 
   const handleBloodPressureSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setLoading(true);
 
     try {
-      await createBloodPressureLog(
-        Number(systolic),
-        Number(diastolic)
-      );
-
-      alert("Blood pressure logged");
-
+      await createBloodPressureLog(Number(systolic), Number(diastolic));
       setSystolic("");
       setDiastolic("");
-    } catch (error) {
-      alert("Failed to log blood pressure");
+      showSuccess();
+    } catch {
+      setError("Failed to save blood pressure reading.");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleSugarSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setLoading(true);
 
     try {
-      await createBloodSugarLog(
-        Number(sugarValue),
-        sugarType
-      );
-
-      alert("Blood sugar logged");
-
+      await createBloodSugarLog(Number(sugarValue), sugarType);
       setSugarValue("");
-    } catch (error) {
-      alert("Failed to log blood sugar");
+      showSuccess();
+    } catch {
+      setError("Failed to save blood sugar reading.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="page-container">
 
+      {/* Header */}
       <div className="dashboard-header">
         <h1>Record Health Data</h1>
-
-        <p>
-          Keep your health history up to date.
-        </p>
+        <p>Keep your health history up to date.</p>
       </div>
 
+      {/* Type selector */}
       <div className="log-type-selector">
-
         <button
-          className={
-            selectedType === "BP"
-              ? "log-type-btn active"
-              : "log-type-btn"
-          }
-          onClick={() => setSelectedType("BP")}
+          className={`log-type-btn${selectedType === "BP" ? " active" : ""}`}
+          onClick={() => { setSelectedType("BP"); setError(""); setSuccess(false); }}
         >
+          <IoHeartOutline className="log-type-icon" />
           Blood Pressure
         </button>
 
         <button
-          className={
-            selectedType === "SUGAR"
-              ? "log-type-btn active"
-              : "log-type-btn"
-          }
-          onClick={() => setSelectedType("SUGAR")}
+          className={`log-type-btn${selectedType === "SUGAR" ? " active" : ""}`}
+          onClick={() => { setSelectedType("SUGAR"); setError(""); setSuccess(false); }}
         >
+          <IoWaterOutline className="log-type-icon" />
           Blood Sugar
         </button>
-
       </div>
 
-      {selectedType === "BP" && (
-        <div className="dashboard-card">
+      {/* Error */}
+      {error && (
+        <div className="log-error">{error}</div>
+      )}
 
-          <h2>Blood Pressure</h2>
+      {/* Success */}
+      {success && (
+        <div className="log-success">
+          <IoCheckmarkCircle />
+          Reading saved successfully.
+        </div>
+      )}
+
+      {/* BP Form */}
+      {selectedType === "BP" && (
+        <div className="dashboard-card log-card">
+          <div className="log-card-label">
+            <IoHeartOutline />
+            Blood Pressure
+          </div>
+
+          <div className="log-hint">
+            Normal range: Systolic 90–120 · Diastolic 60–80 mmHg
+          </div>
 
           <form onSubmit={handleBloodPressureSubmit}>
+            <div className="log-input-row">
+              <div className="log-input-group">
+                <label htmlFor="systolic">Systolic</label>
+                <div className="log-input-wrap">
+                  <input
+                    id="systolic"
+                    type="number"
+                    placeholder="120"
+                    min="60"
+                    max="250"
+                    value={systolic}
+                    onChange={(e) => setSystolic(e.target.value)}
+                    required
+                  />
+                  <span className="log-unit">mmHg</span>
+                </div>
+              </div>
 
-            <input
-              type="number"
-              placeholder="Systolic"
-              value={systolic}
-              onChange={(e) =>
-                setSystolic(e.target.value)
-              }
-            />
+              <div className="log-input-divider">/</div>
 
-            <input
-              type="number"
-              placeholder="Diastolic"
-              value={diastolic}
-              onChange={(e) =>
-                setDiastolic(e.target.value)
-              }
-            />
+              <div className="log-input-group">
+                <label htmlFor="diastolic">Diastolic</label>
+                <div className="log-input-wrap">
+                  <input
+                    id="diastolic"
+                    type="number"
+                    placeholder="80"
+                    min="40"
+                    max="150"
+                    value={diastolic}
+                    onChange={(e) => setDiastolic(e.target.value)}
+                    required
+                  />
+                  <span className="log-unit">mmHg</span>
+                </div>
+              </div>
+            </div>
 
-            <button
-              type="submit"
-              className="primary-btn"
-            >
-              Save Reading
+            <button type="submit" className="primary-btn" disabled={loading}>
+              {loading ? (
+                <><span className="auth-spinner" /> Saving…</>
+              ) : (
+                "Save Reading"
+              )}
             </button>
-
           </form>
-
         </div>
       )}
 
+      {/* Sugar Form */}
       {selectedType === "SUGAR" && (
-        <div className="dashboard-card">
+        <div className="dashboard-card log-card">
+          <div className="log-card-label">
+            <IoWaterOutline />
+            Blood Sugar
+          </div>
 
-          <h2>Blood Sugar</h2>
+          <div className="log-hint">
+            Fasting: 70–99 · Post-meal: under 140 mg/dL
+          </div>
 
           <form onSubmit={handleSugarSubmit}>
+            <div className="log-sugar-type">
+              {["FASTING", "POST_MEAL"].map((t) => (
+                <button
+                  key={t}
+                  type="button"
+                  className={`log-sugar-type-btn${sugarType === t ? " active" : ""}`}
+                  onClick={() => setSugarType(t)}
+                >
+                  {t === "FASTING" ? "Fasting" : "Post Meal"}
+                </button>
+              ))}
+            </div>
 
-            <input
-              type="number"
-              placeholder="Sugar Value"
-              value={sugarValue}
-              onChange={(e) =>
-                setSugarValue(e.target.value)
-              }
-            />
+            <div className="log-input-group">
+              <label htmlFor="sugar">Sugar Value</label>
+              <div className="log-input-wrap">
+                <input
+                  id="sugar"
+                  type="number"
+                  placeholder="95"
+                  min="20"
+                  max="600"
+                  value={sugarValue}
+                  onChange={(e) => setSugarValue(e.target.value)}
+                  required
+                />
+                <span className="log-unit">mg/dL</span>
+              </div>
+            </div>
 
-            <select
-              value={sugarType}
-              onChange={(e) =>
-                setSugarType(e.target.value)
-              }
-            >
-              <option value="FASTING">
-                Fasting
-              </option>
-
-              <option value="POST_MEAL">
-                Post Meal
-              </option>
-            </select>
-
-            <button
-              type="submit"
-              className="primary-btn"
-            >
-              Save Reading
+            <button type="submit" className="primary-btn" disabled={loading}>
+              {loading ? (
+                <><span className="auth-spinner" /> Saving…</>
+              ) : (
+                "Save Reading"
+              )}
             </button>
-
           </form>
-
         </div>
       )}
-
     </div>
   );
 }

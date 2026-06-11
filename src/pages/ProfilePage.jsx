@@ -1,224 +1,150 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  IoTimeOutline,
+  IoNotificationsOutline,
+  IoLogOutOutline,
+  IoHeartOutline,
+  IoChevronForwardOutline,
+  IoShieldCheckmarkOutline,
+} from "react-icons/io5";
+
 import { getProfile } from "../services/profileService";
 import {
   getUsersIObserve,
-  getMyObservers
+  getMyObservers,
 } from "../services/careRelationshipService";
 
+import "../styles/profile.css";
+
 function ProfilePage() {
-
   const [profile, setProfile] = useState(null);
-
-  const [peopleUnderMyCare,
-      setPeopleUnderMyCare] =
-      useState([]);
-
-    const [myObservers,
-      setMyObservers] =
-      useState([]);
+  const [peopleUnderMyCare, setPeopleUnderMyCare] = useState([]);
+  const [myObservers, setMyObservers] = useState([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-
-    async function loadProfile() {
-
+    async function load() {
       try {
-
-        const [
-              profileData,
-              observedData,
-              observerData
-            ] = await Promise.all([
-              getProfile(),
-              getUsersIObserve(),
-              getMyObservers()
-            ]);
-
-            setProfile(
-              profileData
-            );
-
-            setPeopleUnderMyCare(
-              observedData
-            );
-
-            setMyObservers(
-              observerData
-            );
-
+        const [profileData, observedData, observerData] = await Promise.all([
+          getProfile(),
+          getUsersIObserve(),
+          getMyObservers(),
+        ]);
+        setProfile(profileData);
+        setPeopleUnderMyCare(observedData);
+        setMyObservers(observerData);
       } catch (error) {
-
         console.error(error);
-
       }
-
     }
-
-    loadProfile();
-
+    load();
   }, []);
 
   function handleLogout() {
-
     localStorage.removeItem("token");
-
     navigate("/login");
-
   }
 
   if (!profile) {
-
     return (
       <div className="page-container">
-        Loading...
+        <div className="profile-skeleton">
+          <div className="profile-skeleton-avatar" />
+          <div className="profile-skeleton-line" />
+          <div className="profile-skeleton-line short" />
+        </div>
       </div>
     );
-
   }
 
   return (
     <div className="page-container">
 
-      <div className="dashboard-card">
-
-        <div
-          className="avatar"
-          style={{
-            margin: "0 auto"
-          }}
-        >
-          {profile.name
-            .charAt(0)
-            .toUpperCase()}
+      {/* Identity card */}
+      <div className="profile-hero">
+        <div className="profile-avatar-lg">
+          {profile.name.charAt(0).toUpperCase()}
         </div>
-
-        <br />
-
-        <h2>{profile.name}</h2>
-
-        <p className="dashboard-subtext">
-          {profile.email}
-        </p>
-
+        <h2 className="profile-name">{profile.name}</h2>
+        <p className="profile-email">{profile.email}</p>
       </div>
 
-     <div className="dashboard-card care-circle-card">
-
-        <h3>
-          Care Circle
-        </h3>
-
-        <div className="care-section">
-
-          <span className="care-section-title">
-            People Under My Care
-          </span>
-
-          <div className="care-list">
-
-            {
-              peopleUnderMyCare.length === 0
-                ? (
-                    <div className="care-empty">
-                      Nobody yet
-                    </div>
-                  )
-                : (
-                    peopleUnderMyCare.map(
-                      (person) => (
-                        <div
-                          key={person.userId}
-                          className="care-person"
-                        >
-                          {person.userName}
-                        </div>
-                      )
-                    )
-                  )
-            }
-
-          </div>
-
+      {/* Care circle */}
+      <div className="dashboard-card care-circle-card">
+        <div className="care-circle-heading">
+          <IoShieldCheckmarkOutline className="care-circle-icon" />
+          <h3>Care Circle</h3>
         </div>
 
         <div className="care-section">
-
-          <span className="care-section-title">
-            Caring For You
-          </span>
-
+          <span className="care-section-title">People Under My Care</span>
           <div className="care-list">
-
-            {
-              myObservers.length === 0
-                ? (
-                    <div className="care-empty">
-                      Nobody yet
-                    </div>
-                  )
-                : (
-                    myObservers.map(
-                      (person) => (
-                        <div
-                          key={person.userId}
-                          className="care-person"
-                        >
-                          {person.userName}
-                        </div>
-                      )
-                    )
-                  )
-            }
-
+            {peopleUnderMyCare.length === 0 ? (
+              <div className="care-empty">Nobody yet</div>
+            ) : (
+              peopleUnderMyCare.map((person) => (
+                <div key={person.userId} className="care-person">
+                  {person.userName}
+                </div>
+              ))
+            )}
           </div>
-
         </div>
 
+        <div className="care-section">
+          <span className="care-section-title">Caring For You</span>
+          <div className="care-list">
+            {myObservers.length === 0 ? (
+              <div className="care-empty">Nobody yet</div>
+            ) : (
+              myObservers.map((person) => (
+                <div key={person.userId} className="care-person">
+                  {person.userName}
+                </div>
+              ))
+            )}
+          </div>
+        </div>
       </div>
 
-      <div className="dashboard-card">
-
-        <h3>
-          Health
-        </h3>
-
-        <br />
-
+      {/* Health actions */}
+      <div className="profile-menu-card">
         <button
-          className="primary-btn"
-          onClick={() =>
-            navigate("/history")
-          }
+          className="profile-menu-item"
+          onClick={() => navigate("/history")}
         >
-          View Health History
+          <div className="profile-menu-left">
+            <div className="profile-menu-icon green">
+              <IoHeartOutline />
+            </div>
+            <span>Health History</span>
+          </div>
+          <IoChevronForwardOutline className="profile-menu-chevron" />
         </button>
 
-        <br />
-        <br />
+        <div className="profile-menu-divider" />
 
         <button
-          className="secondary-btn"
-          onClick={() =>
-            navigate("/reminders")
-          }
+          className="profile-menu-item"
+          onClick={() => navigate("/reminders")}
         >
-          Reminder Settings
+          <div className="profile-menu-left">
+            <div className="profile-menu-icon blue">
+              <IoNotificationsOutline />
+            </div>
+            <span>Reminder Settings</span>
+          </div>
+          <IoChevronForwardOutline className="profile-menu-chevron" />
         </button>
-
       </div>
 
-      <div className="dashboard-card">
-
-        <button
-          className="secondary-btn"
-          onClick={handleLogout}
-        >
-          Logout
-        </button>
-
-      </div>
+      {/* Logout */}
+      <button className="profile-logout-btn" onClick={handleLogout}>
+        <IoLogOutOutline />
+        Log Out
+      </button>
 
     </div>
   );

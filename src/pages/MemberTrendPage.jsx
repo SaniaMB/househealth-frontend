@@ -1,147 +1,134 @@
 import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import {
-  useParams,
-  useNavigate
-} from "react-router-dom";
+  IoHeartOutline,
+  IoWaterOutline,
+  IoTrendingUpOutline,
+  IoTrendingDownOutline,
+  IoRemoveOutline,
+  IoChevronBackOutline,
+  IoAlertCircleOutline,
+} from "react-icons/io5";
 
-import {
-  getMemberTrendSummary,
-} from "../services/familyService";
+import { getMemberTrendSummary } from "../services/familyService";
 
-function formatTrend(trend) {
+const TREND_CONFIG = {
+  IMPROVING: {
+    label: "Improving",
+    icon: <IoTrendingUpOutline />,
+    className: "improving",
+  },
+  WORSENING: {
+    label: "Needs attention",
+    icon: <IoTrendingDownOutline />,
+    className: "worsening",
+  },
+  STABLE: {
+    label: "Stable",
+    icon: <IoRemoveOutline />,
+    className: "stable",
+  },
+  INSUFFICIENT_DATA: {
+    label: "Not enough data yet",
+    icon: <IoAlertCircleOutline />,
+    className: "insufficient",
+  },
+};
 
-  if (trend === "INSUFFICIENT_DATA") {
-    return "Trend not available yet";
-  }
+function TrendRow({ icon, title, trendStatus }) {
+  const config = TREND_CONFIG[trendStatus] || TREND_CONFIG.INSUFFICIENT_DATA;
 
-  if (trend === "IMPROVING") {
-    return "Improving";
-  }
-
-  if (trend === "WORSENING") {
-    return "Needs attention";
-  }
-
-  return "Stable";
+  return (
+    <div className="trend-row">
+      <div className="trend-row-left">
+        <div className="trend-row-icon">{icon}</div>
+        <span className="trend-row-title">{title}</span>
+      </div>
+      <span className={`trend-badge ${config.className}`}>
+        {config.icon}
+        {config.label}
+      </span>
+    </div>
+  );
 }
 
 function MemberTrendPage() {
+  const { familyId, userId } = useParams();
+  const navigate = useNavigate();
 
-  const {
-    familyId,
-    userId,
-  } = useParams();
-
-  const navigate =
-    useNavigate();
-
-  const [summary, setSummary] =
-    useState(null);
+  const [summary, setSummary] = useState(null);
 
   useEffect(() => {
-
-    async function loadSummary() {
-
+    async function load() {
       try {
-
-        const data =
-          await getMemberTrendSummary(
-            familyId,
-            userId
-          );
-
+        const data = await getMemberTrendSummary(familyId, userId);
         setSummary(data);
-
       } catch (error) {
-
         console.error(error);
-
       }
-
     }
-
-    loadSummary();
-
+    load();
   }, [familyId, userId]);
 
   if (!summary) {
-
     return (
       <div className="page-container">
-        Loading...
+        <div className="dashboard-skeleton">
+          {[1, 2, 3].map((i) => <div key={i} className="dashboard-skeleton-card" />)}
+        </div>
       </div>
     );
-
   }
 
   return (
-
     <div className="page-container">
 
       <button
-        className="secondary-btn"
-        onClick={() =>
-          navigate(-1)
-        }
+        className="family-back-btn"
+        style={{ marginBottom: 20 }}
+        onClick={() => navigate(-1)}
       >
-        Back
+        <IoChevronBackOutline /> Back
       </button>
 
-      <h1
-        style={{
-          marginTop: "18px",
-          marginBottom: "18px"
-        }}
-      >
-        {summary.userName}
-      </h1>
-
-      <div className="dashboard-card">
-
-        <h3>
-          Blood Pressure
-        </h3>
-
-        <p>
-          {formatTrend(
-            summary.bloodPressureTrend
-          )}
-        </p>
-
+      {/* Member hero */}
+      <div className="profile-hero" style={{ marginBottom: 24 }}>
+        <div className="profile-avatar-lg">
+          {summary.userName.charAt(0).toUpperCase()}
+        </div>
+        <h2 className="profile-name">{summary.userName}</h2>
+        <p className="profile-email">Health Trends</p>
       </div>
 
-      <div className="dashboard-card">
+      {/* Trend cards */}
+      <div className="dashboard-card trend-summary-card">
+        <h3 style={{ marginBottom: 16 }}>Current Trends</h3>
 
-        <h3>
-          Fasting Sugar
-        </h3>
+        <TrendRow
+          icon={<IoHeartOutline />}
+          title="Blood Pressure"
+          trendStatus={summary.bloodPressureTrend}
+        />
 
-        <p>
-          {formatTrend(
-            summary.fastingSugarTrend
-          )}
-        </p>
+        <div className="trend-row-divider" />
 
-      </div>
+        <TrendRow
+          icon={<IoWaterOutline />}
+          title="Fasting Sugar"
+          trendStatus={summary.fastingSugarTrend}
+        />
 
-      <div className="dashboard-card">
+        <div className="trend-row-divider" />
 
-        <h3>
-          Post Meal Sugar
-        </h3>
-
-        <p>
-          {formatTrend(
-            summary.postMealSugarTrend
-          )}
-        </p>
-
+        <TrendRow
+          icon={<IoWaterOutline />}
+          title="Post Meal Sugar"
+          trendStatus={summary.postMealSugarTrend}
+        />
       </div>
 
     </div>
-
   );
-
 }
 
 export default MemberTrendPage;

@@ -1,0 +1,130 @@
+/* ── Filter bar ──────────────────── */
+
+.history-filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.history-filter-icon {
+  color: var(--hh-muted);
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.history-filter-btn {
+  padding: 7px 14px;
+  border-radius: var(--hh-radius-pill);
+  border: 1.5px solid var(--hh-border);
+  background: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--hh-secondary);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.history-filter-btn:hover {
+  border-color: var(--hh-green);
+  color: var(--hh-green);
+}
+
+.history-filter-btn.active {
+  border-color: var(--hh-green);
+  background: var(--hh-green-subtle);
+  color: var(--hh-green-deep);
+}
+
+/* ── History card ────────────────── */
+
+.history-card {
+  background: #fff;
+  border: 1px solid var(--hh-border);
+  border-radius: 18px;
+  padding: 16px 18px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: var(--hh-shadow-sm);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.history-card:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--hh-shadow-md);
+}
+
+/* ── Icon ────────────────────────── */
+
+.history-card-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.history-card-icon.bp {
+  background: rgba(61,181,98,0.1);
+  color: var(--hh-green);
+}
+
+.history-card-icon.sugar {
+  background: rgba(37,99,235,0.08);
+  color: #2563eb;
+}
+
+/* ── Body ────────────────────────── */
+
+.history-card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.history-card-body .dashboard-label {
+  margin-bottom: 4px;
+  font-size: 0.75rem;
+}
+
+.history-card-body .dashboard-reading {
+  font-size: 1.5rem;
+  margin-bottom: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.history-sep {
+  color: var(--hh-muted);
+  font-weight: 300;
+  font-size: 1.2rem;
+}
+
+.history-unit {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--hh-muted);
+  margin-left: 3px;
+}
+
+/* ── Time ────────────────────────── */
+
+.history-card-time {
+  text-align: right;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--hh-secondary);
+  flex-shrink: 0;
+  line-height: 1.5;
+}
+
+.history-card-time span {
+  color: var(--hh-muted);
+  font-weight: 500;
+}

@@ -1,100 +1,196 @@
 .feed-page {
-  max-width: 760px;
+  max-width: 700px;
   margin: 0 auto;
 }
 
 .feed-header {
-  margin-bottom: 28px;
+  margin-bottom: 24px;
+}
+
+.feed-header-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
 }
 
 .feed-header h1 {
-  font-size: 2rem;
-
-  margin-bottom: 8px;
+  font-size: 1.9rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 5px;
 }
 
 .feed-header p {
   color: var(--hh-secondary);
+  font-size: 0.95rem;
 }
 
+/* ── Refresh button ─────────────── */
+
+.feed-refresh-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--hh-border);
+  background: #fff;
+  color: var(--hh-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.feed-refresh-btn:hover {
+  color: var(--hh-green);
+  border-color: var(--hh-green);
+}
+
+/* ── Feed card ───────────────────── */
+
 .feed-card {
-  background: var(--hh-card);
-
+  background: #fff;
   border: 1px solid var(--hh-border);
-
-  border-radius: 24px;
-
-  padding: 22px;
-
-  margin-bottom: 18px;
-
-  box-shadow:
-    0 4px 12px rgba(0,0,0,0.04);
-
-  transition: 0.2s;
+  border-radius: 20px;
+  padding: 25px;
+  margin-bottom: 14px;
+  box-shadow: var(--hh-shadow-sm);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 
 .feed-card:hover {
   transform: translateY(-2px);
+  box-shadow: var(--hh-shadow-md);
 }
 
 .feed-card-header {
   display: flex;
-
   align-items: center;
-
-  gap: 14px;
-
-  margin-bottom: 18px;
+  gap: 12px;
+  margin-bottom: 16px;
 }
 
-.feed-card-header h3 {
+.feed-card-meta h3 {
   margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
 
+.feed-card-meta span {
+  color: var(--hh-muted);
+  font-size: 0.8rem;
+}
+
+.feed-card-meta {
+  flex: 1;
+}
+
+.feed-metric-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--hh-green-subtle);
+  color: var(--hh-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 1rem;
+  flex-shrink: 0;
 }
 
-.feed-card-header span {
-  color: var(--hh-secondary);
+/* ── Avatar shared ───────────────── */
 
-  font-size: 0.85rem;
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--hh-green), var(--hh-green-deep));
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+  flex-shrink: 0;
 }
+
+/* ── Feed body ───────────────────── */
 
 .feed-card-body {
   text-align: center;
+  padding: 10px 0 4px;
 }
 
 .activity-type {
   color: var(--hh-secondary);
-
-  margin-bottom: 10px;
-
-  font-weight: 500;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
 }
 
 .activity-value {
-  font-size: 2.4rem;
-
-  font-weight: 700;
-
+  font-size: 2.2rem;
+  font-weight: 800;
   color: var(--hh-text);
-
-  margin-bottom: 16px;
+  letter-spacing: -1px;
+  margin-bottom: 12px;
+  line-height: 1;
 }
 
 .status-badge {
   display: inline-block;
-
-  background:
-    rgba(80,181,85,0.12);
-
-  color: var(--hh-green);
-
-  padding: 8px 16px;
-
-  border-radius: 999px;
-
-  font-size: 0.85rem;
-
+  background: var(--hh-green-subtle);
+  color: var(--hh-green-deep);
+  padding: 6px 14px;
+  border-radius: var(--hh-radius-pill);
+  font-size: 0.8rem;
   font-weight: 600;
+}
+
+/* ── Empty state ─────────────────── */
+
+.feed-empty {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--hh-secondary);
+}
+
+.feed-empty-icon {
+  font-size: 2.5rem;
+  margin-bottom: 14px;
+}
+
+.feed-empty h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--hh-text);
+  margin-bottom: 6px;
+}
+
+.feed-empty p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+/* ── Skeleton ────────────────────── */
+
+.feed-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.feed-skeleton-card {
+  height: 130px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  border-radius: 20px;
+  animation: shimmer 1.4s infinite;
 }
