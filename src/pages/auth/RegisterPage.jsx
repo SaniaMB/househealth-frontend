@@ -115,6 +115,8 @@ function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
+  const [registeredEmail, setRegisteredEmail] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -122,14 +124,49 @@ function RegisterPage() {
     setLoading(true);
 
     try {
-      await registerUser(name, email, password);
-      navigate("/login");
+     await registerUser(name, email, password);
+      setRegisteredEmail(email);
+      setRegistrationSuccess(true);
     } catch (err) {
       setError("Registration failed. Please try again.");
     } finally {
       setLoading(false);
     }
   };
+
+  if (registrationSuccess) {
+  return (
+    <div className="auth-page">
+      <div className="auth-content">
+
+        <div className="auth-logo">
+          <div className="auth-logo-icon">
+            <IoLeafOutline />
+          </div>
+
+          <h1 className="auth-title">
+            House<span>Health</span>
+          </h1>
+        </div>
+
+        <div className="auth-success">
+          <h2>Email Verification Required</h2>
+
+          <p>Your account has been created successfully.</p>
+
+          <p>We sent a verification link to:</p>
+
+          <strong>{registeredEmail}</strong>
+
+          <p>
+             Click the link to activate your account and get started.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  );
+}
 
   return (
     <div className="auth-page">

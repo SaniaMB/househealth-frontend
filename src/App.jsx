@@ -13,7 +13,7 @@ import FamilyPage from "./pages/FamilyPage";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import MemberTrendPage from "./pages/MemberTrendPage";
-
+import VerifyEmailPage from "./pages/auth/VerifyEmailPage";
 import MainLayout from "./layouts/MainLayout";
 
 function App() {
@@ -25,6 +25,10 @@ function App() {
 
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route
+            path="/verify"
+            element={<VerifyEmailPage />}
+          />
 
         <Route
           element={

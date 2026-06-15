@@ -41,20 +41,31 @@ function tickDate(value) {
 
 function DashboardPage() {
   const [dashboard, setDashboard] = useState(null);
-  const [bloodPressureHistory, setBloodPressureHistory] = useState(null);
-  const [fastingSugarHistory, setFastingSugarHistory] = useState(null);
-  const [postMealSugarHistory, setPostMealSugarHistory] = useState(null);
+
+  const [bloodPressureHistory, setBloodPressureHistory] =
+    useState({ points: [] });
+
+  const [fastingSugarHistory, setFastingSugarHistory] =
+    useState({ points: [] });
+
+  const [postMealSugarHistory, setPostMealSugarHistory] =
+    useState({ points: [] });
 
   useEffect(() => {
     async function load() {
       try {
-        const [dashboardData, bpHistory, fastingHistory, postMealHistory] =
-          await Promise.all([
-            getDashboard(),
-            getBloodPressureHistory(),
-            getFastingSugarHistory(),
-            getPostMealSugarHistory(),
-          ]);
+        const [
+          dashboardData,
+          bpHistory,
+          fastingHistory,
+          postMealHistory,
+        ] = await Promise.all([
+          getDashboard(),
+          getBloodPressureHistory(),
+          getFastingSugarHistory(),
+          getPostMealSugarHistory(),
+        ]);
+
         setDashboard(dashboardData);
         setBloodPressureHistory(bpHistory);
         setFastingSugarHistory(fastingHistory);
@@ -66,7 +77,7 @@ function DashboardPage() {
     load();
   }, []);
 
-  if (!dashboard || !bloodPressureHistory || !fastingSugarHistory || !postMealSugarHistory) {
+  if (!dashboard) {
     return (
       <div className="page-container">
         <div className="dashboard-header">
@@ -94,11 +105,15 @@ function DashboardPage() {
 
       {/* Blood Pressure */}
       {bpTrend.trendStatus === "INSUFFICIENT_DATA" ? (
-        <UnlockTrendsCard
-          title="Blood Pressure"
-          latestValue={`${dashboard.latestBloodPressure.systolic} / ${dashboard.latestBloodPressure.diastolic}`}
-        />
-      ) : (
+          <UnlockTrendsCard
+            title="Blood Pressure"
+            latestValue={
+              dashboard.latestBloodPressure
+                ? `${dashboard.latestBloodPressure.systolic} / ${dashboard.latestBloodPressure.diastolic}`
+                : "No readings yet"
+            }
+          />
+        ) : (
         <MetricChartCard
           title="Blood Pressure"
           trend={bpTrend.trendStatus}
@@ -124,7 +139,11 @@ function DashboardPage() {
       {fastTrend.trendStatus === "INSUFFICIENT_DATA" ? (
         <UnlockTrendsCard
           title="Fasting Sugar"
-          latestValue={dashboard.latestFastingSugar.sugarValue}
+          latestValue={
+            dashboard.latestFastingSugar
+              ? dashboard.latestFastingSugar.sugarValue
+              : "No readings yet"
+          }
         />
       ) : (
         <MetricChartCard
@@ -151,7 +170,11 @@ function DashboardPage() {
       {postTrend.trendStatus === "INSUFFICIENT_DATA" ? (
         <UnlockTrendsCard
           title="Post Meal Sugar"
-          latestValue={dashboard.latestPostMealSugar.sugarValue}
+          latestValue={
+            dashboard.latestPostMealSugar
+              ? dashboard.latestPostMealSugar.sugarValue
+              : "No readings yet"
+          }
         />
       ) : (
         <MetricChartCard
