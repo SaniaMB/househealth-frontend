@@ -15,6 +15,8 @@ import RegisterPage from "./pages/auth/RegisterPage";
 import MemberTrendPage from "./pages/MemberTrendPage";
 import VerifyEmailPage from "./pages/auth/VerifyEmailPage";
 import MainLayout from "./layouts/MainLayout";
+import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
+import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
 
 function App() {
   return (
@@ -29,6 +31,16 @@ function App() {
             path="/verify"
             element={<VerifyEmailPage />}
           />
+
+          <Route
+            path="/forgot-password"
+            element={<ForgotPasswordPage />}
+        />
+
+        <Route
+            path="/reset-password"
+            element={<ResetPasswordPage />}
+        />
 
         <Route
           element={
@@ -62,11 +74,6 @@ function App() {
           <Route
           path="/history"
           element={<HistoryPage />}
-          />
-
-          <Route
-            path="/family"
-            element={<FamilyPage />}
           />
 
           <Route

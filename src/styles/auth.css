@@ -258,3 +258,33 @@
   height: 1px;
   background: var(--hh-border);
 }
+
+/* chatgpt gave */
+
+/* ---------- Success screens ---------- */
+
+.auth-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.auth-success h2 {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.auth-success p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 340px;
+}
+
+.auth-success .primary-btn {
+  margin-top: 1rem;
+  text-decoration: none;
+}

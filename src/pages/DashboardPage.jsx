@@ -18,6 +18,7 @@ import {
 
 import MetricChartCard from "../components/dashboard/MetricChartCard";
 import UnlockTrendsCard from "../components/dashboard/UnlockTrendsCard";
+import { downloadHealthReport } from "../services/reportService";
 
 function CustomTooltip({ active, payload, label }) {
   if (!active || !payload?.length) return null;
@@ -51,6 +52,41 @@ function DashboardPage() {
   const [postMealSugarHistory, setPostMealSugarHistory] =
     useState({ points: [] });
 
+    const handleDownloadReport = async () => {
+
+      try {
+
+        const blob =
+          await downloadHealthReport();
+
+        const url =
+          window.URL.createObjectURL(blob);
+
+        const link =
+          document.createElement("a");
+
+        link.href = url;
+
+        link.download = "HouseHealth_Report.pdf";
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        link.remove();
+
+        window.URL.revokeObjectURL(url);
+
+      } catch (err) {
+
+        console.error(err);
+
+        alert("Unable to generate report.");
+
+      }
+
+    };
+
   useEffect(() => {
     async function load() {
       try {
@@ -65,6 +101,11 @@ function DashboardPage() {
           getFastingSugarHistory(),
           getPostMealSugarHistory(),
         ]);
+
+        console.log("Dashboard:", dashboardData);
+        console.log("BP History:", bpHistory);
+        console.log("Fasting:", fastingHistory);
+        console.log("Post Meal:", postMealHistory);
 
         setDashboard(dashboardData);
         setBloodPressureHistory(bpHistory);
@@ -99,8 +140,19 @@ function DashboardPage() {
     <div className="page-container">
 
       <div className="dashboard-header">
-        <h1>Health Snapshot</h1>
-        <p>Track trends and progress across your metrics.</p>
+
+        <div>
+          <h1>Health Snapshot</h1>
+          <p>Track trends and progress across your metrics.</p>
+        </div>
+
+        <button
+          className="primary-btn"
+          onClick={handleDownloadReport}
+        >
+          Export Report
+        </button>
+
       </div>
 
       {/* Blood Pressure */}
