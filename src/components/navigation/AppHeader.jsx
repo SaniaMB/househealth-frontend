@@ -49,9 +49,6 @@ function AppHeader({ scrolled }) {
     <header className={`app-header${scrolled ? " scrolled" : ""}`}>
       <div className="app-header-brand">
         <h2>HouseHealth</h2>
-        {profile?.name && (
-          <span className="app-header-sub">Hi, {profile.name.split(" ")[0]} 👋</span>
-        )}
       </div>
 
       <div className="header-actions">
