@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  IoAddOutline,
-  IoChevronForwardOutline,
-  IoPersonOutline,
-  IoPeopleOutline,
-  IoShieldCheckmarkOutline,
-  IoTrashOutline,
-  IoMailOutline,
-  IoCreateOutline,
-  IoHeartOutline,
-  IoExitOutline,
-  IoChevronBackOutline,
-} from "react-icons/io5";
+  Plus,
+  ChevronRight,
+  User,
+  Users,
+  Shield,
+  Trash2,
+  Mail,
+  Edit,
+  Heart,
+  LogOut,
+  ChevronLeft,
+} from "lucide-react";
 
 import "../styles/family.css";
 
@@ -243,18 +243,18 @@ function FamilyPage() {
           >
             <div className="family-card-inner">
               <div className="family-card-icon">
-                <IoPeopleOutline />
+                <Users size={20} />
               </div>
               <div>
                 <h3>{family.familyName}</h3>
                 {family.owner && (
                   <span className="owner-badge">
-                    <IoShieldCheckmarkOutline /> Owner
+                    <Shield size={14} /> Owner
                   </span>
                 )}
               </div>
             </div>
-            <IoChevronForwardOutline className="family-card-chevron" />
+            <ChevronRight className="family-card-chevron" size={20} />
           </div>
         ))}
 
@@ -264,7 +264,7 @@ function FamilyPage() {
             style={{ marginTop: "8px" }}
             onClick={() => setShowCreateFamily(true)}
           >
-            <IoAddOutline style={{ marginRight: 6 }} />
+            <Plus size={20} style={{ marginRight: 6 }} />
             Create Family
           </button>
         ) : (
@@ -301,7 +301,7 @@ function FamilyPage() {
       {/* Header */}
       <div className="family-details-header">
         <button className="family-back-btn" onClick={goBack}>
-          <IoChevronBackOutline /> My Families
+          <ChevronLeft size={18} /> My Families
         </button>
         <h2>{selectedFamily.familyName}</h2>
         <p>{members.length} member{members.length !== 1 ? "s" : ""}</p>
@@ -372,17 +372,17 @@ function FamilyPage() {
               <div className="member-badges">
                 {member.owner && (
                   <span className="owner-badge">
-                    <IoShieldCheckmarkOutline /> Owner
+                    <Shield size={14} /> Owner
                   </span>
                 )}
                 {isUnderMyCare(member.userId) && member.userId !== currentUserId && (
                   <span className="care-badge">
-                    <IoHeartOutline /> In my care
+                    <Heart size={14} /> In my care
                   </span>
                 )}
               </div>
             </div>
-            <IoChevronForwardOutline className="family-card-chevron" />
+            <ChevronRight className="family-card-chevron" size={20} />
           </div>
         ))}
       </div>
@@ -398,14 +398,14 @@ function FamilyPage() {
               navigate(`/family/${selectedFamily.familyId}/member/${selectedMember.userId}`)
             }
           >
-            <IoChevronForwardOutline /> View Trends
+            <ChevronRight size={18} /> View Trends
           </button>
 
           <button
             className={isUnderMyCare(selectedMember.userId) ? "primary-btn" : "secondary-btn"}
             onClick={() => handleCareToggle(selectedMember.userId)}
           >
-            <IoHeartOutline />
+            <Heart size={18} />
             {isUnderMyCare(selectedMember.userId) ? "Under My Care ✓" : "Add to My Care"}
           </button>
 
@@ -415,14 +415,14 @@ function FamilyPage() {
                 className="secondary-btn"
                 onClick={() => handleMakeOwner(selectedMember.userId)}
               >
-                <IoShieldCheckmarkOutline /> Make Owner
+                <Shield size={18} /> Make Owner
               </button>
 
               <button
                 className="secondary-btn family-danger-btn"
                 onClick={() => handleRemoveMember(selectedMember.userId)}
               >
-                <IoTrashOutline /> Remove Member
+                <Trash2 size={18} /> Remove Member
               </button>
             </>
           )}
@@ -444,7 +444,7 @@ function FamilyPage() {
                 className={newOwnerId === member.userId ? "primary-btn" : "secondary-btn"}
                 onClick={() => setNewOwnerId(member.userId)}
               >
-                <IoPersonOutline /> {member.name}
+                <User size={18} /> {member.name}
               </button>
             ))}
           <button
@@ -492,7 +492,7 @@ function FamilyPage() {
               className="secondary-btn"
               onClick={() => setShowInviteMember(!showInviteMember)}
             >
-              <IoMailOutline /> Invite Member
+              <Mail size={18} /> Invite Member
             </button>
 
             <button
@@ -502,7 +502,7 @@ function FamilyPage() {
                 setShowRenameFamily(!showRenameFamily);
               }}
             >
-              <IoCreateOutline /> Rename Family
+              <Edit size={18} /> Rename Family
             </button>
           </>
         )}
@@ -511,7 +511,7 @@ function FamilyPage() {
           className="secondary-btn family-danger-btn"
           onClick={handleLeaveFamily}
         >
-          <IoExitOutline /> Leave Family
+          <LogOut size={18} /> Leave Family
         </button>
       </div>
 

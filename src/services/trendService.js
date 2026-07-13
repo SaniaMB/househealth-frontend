@@ -17,6 +17,7 @@ export async function getBloodPressureTrend() {
 }
 
 export async function getFastingSugarTrend() {
+
   const response = await fetch(
     `${API_BASE_URL}/api/trends/fasting-sugar?trendPeriod=MONTH`,
     {

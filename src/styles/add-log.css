@@ -2,8 +2,8 @@
 
 .log-type-selector {
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 12px;
+  margin-bottom: 28px;
 }
 
 .log-type-btn {
@@ -11,17 +11,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
-  border: 1.5px solid var(--hh-border);
-  background: #fff;
-  padding: 13px;
-  border-radius: 14px;
+  gap: 8px;
+  border: 2px solid var(--hh-border);
+  background: var(--hh-card);
+  padding: 14px;
+  border-radius: var(--hh-radius-lg);
   cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--hh-secondary);
-  transition: border-color 0.18s ease, color 0.18s ease,
-    background 0.18s ease, box-shadow 0.18s ease;
+  font-size: 0.95rem;
+  font-weight: var(--hh-font-weight-semibold);
+  color: var(--hh-text-secondary);
+  transition: all var(--hh-transition-fast) ease;
 }
 
 .log-type-btn:hover {
@@ -30,43 +29,44 @@
 }
 
 .log-type-btn.active {
-  background: linear-gradient(135deg, var(--hh-green), var(--hh-green-deep));
+  background: linear-gradient(135deg, var(--hh-green), var(--hh-green-dark));
   color: #fff;
   border-color: transparent;
   box-shadow: var(--hh-shadow-green);
+  transform: translateY(-2px);
 }
 
 .log-type-icon {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
 }
 
 /* ── Log card ────────────────────── */
 
 .log-card {
-  animation: fadeUp 0.3s ease both;
+  animation: slideUpIn 0.3s ease both;
 }
 
 .log-card-label {
   display: flex;
   align-items: center;
-  gap: 7px;
-  font-size: 0.82rem;
-  font-weight: 700;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: var(--hh-font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--hh-secondary);
-  margin-bottom: 6px;
+  color: var(--hh-text-muted);
+  margin-bottom: 8px;
 }
 
 .log-hint {
-  font-size: 0.8rem;
-  color: var(--hh-muted);
-  background: var(--hh-bg);
+  font-size: 0.9rem;
+  color: var(--hh-text-secondary);
+  background: var(--hh-border-light);
   border: 1px solid var(--hh-border);
-  border-radius: 10px;
-  padding: 8px 12px;
-  margin-bottom: 18px;
-  line-height: 1.5;
+  border-radius: var(--hh-radius);
+  padding: 12px 14px;
+  margin-bottom: 20px;
+  line-height: 1.6;
 }
 
 /* ── Input layout ────────────────── */
@@ -74,14 +74,14 @@
 .log-input-row {
   display: flex;
   align-items: flex-end;
-  gap: 10px;
-  margin-bottom: 16px;
+  gap: 12px;
+  margin-bottom: 18px;
 }
 
 .log-input-divider {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 300;
-  color: var(--hh-muted);
+  color: var(--hh-text-muted);
   padding-bottom: 12px;
   flex-shrink: 0;
 }
@@ -90,13 +90,13 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  margin-bottom: 16px;
+  gap: 8px;
+  margin-bottom: 18px;
 }
 
 .log-input-group label {
-  font-size: 0.82rem;
-  font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: var(--hh-font-weight-semibold);
   color: var(--hh-text);
 }
 
@@ -108,29 +108,29 @@
 
 .log-input-wrap input {
   width: 100%;
-  padding: 13px 48px 13px 14px;
+  padding: 12px 50px 12px 14px;
   border: 1.5px solid var(--hh-border);
   border-radius: var(--hh-radius);
-  background: var(--hh-bg);
+  background: var(--hh-border-light);
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: var(--hh-font-weight-semibold);
   color: var(--hh-text);
-  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+  transition: all var(--hh-transition-fast) ease;
   outline: none;
 }
 
 .log-input-wrap input:focus {
   border-color: var(--hh-green);
-  background: #fff;
-  box-shadow: 0 0 0 4px var(--hh-green-subtle);
+  background: var(--hh-card);
+  box-shadow: var(--hh-shadow-focus);
 }
 
 .log-unit {
   position: absolute;
   right: 14px;
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--hh-muted);
+  font-size: 0.85rem;
+  font-weight: var(--hh-font-weight-semibold);
+  color: var(--hh-text-muted);
   pointer-events: none;
   white-space: nowrap;
 }
@@ -139,54 +139,62 @@
 
 .log-sugar-type {
   display: flex;
-  gap: 8px;
-  margin-bottom: 16px;
+  gap: 10px;
+  margin-bottom: 18px;
 }
 
 .log-sugar-type-btn {
   flex: 1;
-  padding: 10px;
-  border-radius: 12px;
+  padding: 11px;
+  border-radius: var(--hh-radius-lg);
   border: 1.5px solid var(--hh-border);
-  background: #fff;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--hh-secondary);
+  background: var(--hh-card);
+  font-size: 0.9rem;
+  font-weight: var(--hh-font-weight-semibold);
+  color: var(--hh-text-secondary);
   cursor: pointer;
-  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  transition: all var(--hh-transition-fast) ease;
+}
+
+.log-sugar-type-btn:hover {
+  border-color: var(--hh-green);
 }
 
 .log-sugar-type-btn.active {
   border-color: var(--hh-green);
-  color: var(--hh-green-deep);
-  background: var(--hh-green-subtle);
+  color: var(--hh-green-darker);
+  background: var(--hh-green-bg);
+  font-weight: var(--hh-font-weight-bold);
 }
 
 /* ── Feedback states ─────────────── */
 
 .log-error {
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  border-radius: var(--hh-radius-sm);
-  color: #dc2626;
-  font-size: 0.875rem;
-  font-weight: 500;
-  padding: 10px 14px;
-  margin-bottom: 12px;
-  animation: shake 0.35s ease;
+  background: #fee2e2;
+  border: 1.5px solid #fecaca;
+  border-radius: var(--hh-radius);
+  color: #991b1b;
+  font-size: 0.9rem;
+  font-weight: var(--hh-font-weight-medium);
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  animation: slideUpIn 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .log-success {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(61,181,98,0.08);
-  border: 1px solid rgba(61,181,98,0.2);
-  border-radius: var(--hh-radius-sm);
-  color: var(--hh-green-deep);
-  font-size: 0.875rem;
-  font-weight: 600;
-  padding: 10px 14px;
-  margin-bottom: 12px;
-  animation: fadeUp 0.3s ease;
+  background: var(--hh-green-bg);
+  border: 1.5px solid var(--hh-green-light);
+  border-radius: var(--hh-radius);
+  color: var(--hh-green-darker);
+  font-size: 0.9rem;
+  font-weight: var(--hh-font-weight-semibold);
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  animation: slideUpIn 0.3s ease;
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { IoHeartOutline, IoWaterOutline, IoRefreshOutline } from "react-icons/io5";
+import { Heart, Droplet, RotateCw } from "lucide-react";
 import { getFamilyFeed } from "../services/feedService";
 
 function formatTime(iso) {
@@ -52,7 +52,8 @@ function FeedPage() {
             disabled={refreshing}
             aria-label="Refresh feed"
           >
-            <IoRefreshOutline
+            <RotateCw
+              size={18}
               style={{
                 transform: refreshing ? "rotate(180deg)" : "none",
                 transition: "transform 0.5s ease",
@@ -90,8 +91,8 @@ function FeedPage() {
             </div>
             <div className="feed-metric-icon">
               {item.metricType === "BP"
-                ? <IoHeartOutline />
-                : <IoWaterOutline />}
+                ? <Heart size={20} />
+                : <Droplet size={20} />}
             </div>
           </div>
 

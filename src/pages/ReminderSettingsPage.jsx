@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import {
-  IoHeartOutline,
-  IoWaterOutline,
-  IoNotificationsOutline,
-  IoCheckmarkCircle,
-} from "react-icons/io5";
+  Heart,
+  Droplet,
+  Bell,
+  CheckCircle,
+} from "lucide-react";
 
 import {
   configureReminder,
@@ -14,8 +14,8 @@ import {
 import "../styles/reminders.css";
 
 const METRICS = [
-  { value: "BP", label: "Blood Pressure", icon: <IoHeartOutline /> },
-  { value: "SUGAR", label: "Blood Sugar", icon: <IoWaterOutline /> },
+  { value: "BP", label: "Blood Pressure", icon: <Heart size={18} /> },
+  { value: "SUGAR", label: "Blood Sugar", icon: <Droplet size={18} /> },
 ];
 
 const FREQUENCIES = [
@@ -101,7 +101,7 @@ function ReminderSettingsPage() {
       {/* Active summary */}
       <div className="reminder-summary-card">
         <div className="reminder-summary-icon">
-          <IoNotificationsOutline />
+          <Bell size={24} />
         </div>
         <p className="reminder-summary-text">{activeSummary}</p>
       </div>
@@ -180,7 +180,7 @@ function ReminderSettingsPage() {
 
             {success && (
               <div className="log-success">
-                <IoCheckmarkCircle /> Reminder saved.
+                <CheckCircle size={18} /> Reminder saved.
               </div>
             )}
 

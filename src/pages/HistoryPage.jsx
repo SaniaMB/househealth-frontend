@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { IoHeartOutline, IoWaterOutline, IoFunnelOutline } from "react-icons/io5";
+import { Heart, Droplet, Filter } from "lucide-react";
 import { getMyLogs } from "../services/historyService";
 
 import "../styles/history.css";
@@ -41,7 +41,7 @@ function HistoryPage() {
 
       {/* Filter */}
       <div className="history-filter">
-        <IoFunnelOutline className="history-filter-icon" />
+        <Filter size={18} className="history-filter-icon" />
         {["ALL", "BP", "SUGAR"].map((f) => (
           <button
             key={f}
@@ -75,7 +75,7 @@ function HistoryPage() {
           {"systolic" in log ? (
             <>
               <div className="history-card-icon bp">
-                <IoHeartOutline />
+                <Heart size={22} />
               </div>
               <div className="history-card-body">
                 <span className="dashboard-label">Blood Pressure</span>
@@ -88,7 +88,7 @@ function HistoryPage() {
           ) : (
             <>
               <div className="history-card-icon sugar">
-                <IoWaterOutline />
+                <Droplet size={22} />
               </div>
               <div className="history-card-body">
                 <span className="dashboard-label">

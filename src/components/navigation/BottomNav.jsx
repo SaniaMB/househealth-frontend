@@ -1,43 +1,35 @@
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
-  IoHomeOutline,
-  IoHome,
-  IoAddCircle,
-  IoGridOutline,
-  IoGrid,
-  IoPeopleOutline,
-  IoPeople,
-  IoPersonOutline,
-  IoPerson,
-} from "react-icons/io5";
+  Home,
+  BarChart3,
+  Plus,
+  Users,
+  User,
+} from "lucide-react";
 
 const NAV_LINKS = [
   {
     to: "/feed",
     label: "Feed",
-    icon: <IoHomeOutline />,
-    iconActive: <IoHome />,
+    icon: <Home size={20} />,
   },
   {
     to: "/dashboard",
     label: "Dashboard",
-    icon: <IoGridOutline />,
-    iconActive: <IoGrid />,
+    icon: <BarChart3 size={20} />,
   },
   // FAB placeholder — rendered separately in the center
   null,
   {
     to: "/family",
     label: "Family",
-    icon: <IoPeopleOutline />,
-    iconActive: <IoPeople />,
+    icon: <Users size={20} />,
   },
   {
     to: "/profile",
     label: "Profile",
-    icon: <IoPersonOutline />,
-    iconActive: <IoPerson />,
+    icon: <User size={20} />,
   },
 ];
 
@@ -72,7 +64,7 @@ function BottomNav({ visible }) {
               )}
               <NavLink to="/add-log" className="nav-fab">
                 <div className="nav-fab-circle">
-                  <IoAddCircle />
+                  <Plus size={24} />
                 </div>
                 <span className="nav-fab-label">Log</span>
               </NavLink>
@@ -91,7 +83,7 @@ function BottomNav({ visible }) {
             {({ isActive }) => (
               <>
                 <span className="nav-link-indicator" />
-                {isActive ? link.iconActive : link.icon}
+                {link.icon}
                 {link.label}
               </>
             )}

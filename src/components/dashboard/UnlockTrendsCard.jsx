@@ -1,3 +1,5 @@
+import { Lock } from "lucide-react";
+
 function UnlockTrendsCard({
   title,
   latestValue
@@ -26,10 +28,16 @@ function UnlockTrendsCard({
 
         <div className="unlock-message">
 
-          <strong>
-            Keep tracking to unlock
-            trends and insights
-          </strong>
+          <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '8px' }}>
+            <Lock size={18} />
+            <strong>
+              Unlock Trends
+            </strong>
+          </div>
+
+          <p>
+            Keep tracking to unlock trends and insights. Record more readings to see patterns and get personalized health recommendations.
+          </p>
 
         </div>
 

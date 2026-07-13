@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate, Link } from "react-router-dom";
+import { CheckCircle, AlertCircle, Loader, Leaf } from "lucide-react";
 import axios from "axios";
 
 function VerifyEmailPage() {
@@ -40,7 +41,7 @@ function VerifyEmailPage() {
 
         setTimeout(() => {
           navigate("/feed");
-        }, 1500);
+        }, 2000);
       } catch (error) {
         setSuccess(false);
 
@@ -55,29 +56,63 @@ function VerifyEmailPage() {
     };
 
     verifyEmail();
-  }, [searchParams]);
+  }, [searchParams, navigate]);
 
   if (loading) {
     return (
-      <div>
-        <h2>Verifying your email...</h2>
+      <div className="auth-page">
+        <div className="auth-content">
+          <div className="auth-logo">
+            <div className="auth-logo-icon">
+              <Leaf size={22} />
+            </div>
+            <h1 className="auth-title">
+              House<span>Health</span>
+            </h1>
+          </div>
+
+          <div className="auth-success">
+            <Loader size={48} className="text-center mb-lg" style={{ animation: 'spin 1s linear infinite' }} />
+            <h2>Verifying Email</h2>
+            <p>Please wait while we verify your email address...</p>
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div>
-      {success ? (
-        <>
-          <h2>Email Verified ✅</h2>
-          <p>{message}</p>
-        </>
-      ) : (
-        <>
-          <h2>Verification Failed ❌</h2>
-          <p>{message}</p>
-        </>
-      )}
+    <div className="auth-page">
+      <div className="auth-content">
+        <div className="auth-logo">
+          <div className="auth-logo-icon">
+            <Leaf size={22} />
+          </div>
+          <h1 className="auth-title">
+            House<span>Health</span>
+          </h1>
+        </div>
+
+        <div className="auth-success">
+          {success ? (
+            <>
+              <CheckCircle size={56} style={{ color: 'var(--hh-green)', marginBottom: '16px' }} />
+              <h2>Email Verified!</h2>
+              <p>{message}</p>
+              <p style={{ fontSize: '0.9rem', marginTop: '8px' }}>Redirecting to dashboard...</p>
+            </>
+          ) : (
+            <>
+              <AlertCircle size={56} style={{ color: 'var(--hh-error)', marginBottom: '16px' }} />
+              <h2>Verification Failed</h2>
+              <p>{message}</p>
+              <Link to="/login" className="primary-btn auth-submit" style={{ marginTop: '16px' }}>
+                Back to Login
+              </Link>
+            </>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

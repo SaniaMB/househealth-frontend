@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  IoPersonOutline,
-  IoMailOutline,
-  IoLockClosedOutline,
-  IoEyeOutline,
-  IoEyeOffOutline,
-  IoLeafOutline,
-} from "react-icons/io5";
+  User,
+  Mail,
+  Lock,
+  Eye,
+  EyeOff,
+  Leaf,
+} from "lucide-react";
 
 import { registerUser } from "../../services/authService";
 import { getErrorMessage } from "../../utils/errorUtils";
@@ -54,7 +54,7 @@ function RegisterPage() {
         <div className="auth-content">
           <div className="auth-logo">
             <div className="auth-logo-icon">
-              <IoLeafOutline />
+              <Leaf size={22} />
             </div>
 
             <h1 className="auth-title">
@@ -90,7 +90,7 @@ function RegisterPage() {
 
         <div className="auth-logo">
           <div className="auth-logo-icon">
-            <IoLeafOutline />
+            <Leaf size={22} />
           </div>
 
           <h1 className="auth-title">
@@ -109,7 +109,7 @@ function RegisterPage() {
             <label htmlFor="name">Full Name</label>
 
             <div className="auth-input-wrap">
-              <IoPersonOutline className="auth-input-icon" />
+              <User className="auth-input-icon" size={20} />
 
               <input
                 id="name"
@@ -127,7 +127,7 @@ function RegisterPage() {
             <label htmlFor="reg-email">Email</label>
 
             <div className="auth-input-wrap">
-              <IoMailOutline className="auth-input-icon" />
+              <Mail className="auth-input-icon" size={20} />
 
               <input
                 id="reg-email"
@@ -145,7 +145,7 @@ function RegisterPage() {
             <label htmlFor="reg-password">Password</label>
 
             <div className="auth-input-wrap">
-              <IoLockClosedOutline className="auth-input-icon" />
+              <Lock className="auth-input-icon" size={20} />
 
               <input
                 id="reg-password"
@@ -163,7 +163,7 @@ function RegisterPage() {
                 aria-label={showPassword ? "Hide password" : "Show password"}
                 onClick={() => setShowPassword((prev) => !prev)}
               >
-                {showPassword ? <IoEyeOffOutline /> : <IoEyeOutline />}
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
               </button>
             </div>
           </div>
