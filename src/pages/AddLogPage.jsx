@@ -1,9 +1,9 @@
 import { useState } from "react";
 import {
-  IoHeartOutline,
-  IoWaterOutline,
-  IoCheckmarkCircle,
-} from "react-icons/io5";
+  Heart,
+  Droplet,
+  CheckCircle,
+} from "lucide-react";
 
 import {
   createBloodPressureLog,
@@ -76,7 +76,7 @@ function AddLogPage() {
           className={`log-type-btn${selectedType === "BP" ? " active" : ""}`}
           onClick={() => { setSelectedType("BP"); setError(""); setSuccess(false); }}
         >
-          <IoHeartOutline className="log-type-icon" />
+          <Heart size={20} className="log-type-icon" />
           Blood Pressure
         </button>
 
@@ -84,7 +84,7 @@ function AddLogPage() {
           className={`log-type-btn${selectedType === "SUGAR" ? " active" : ""}`}
           onClick={() => { setSelectedType("SUGAR"); setError(""); setSuccess(false); }}
         >
-          <IoWaterOutline className="log-type-icon" />
+          <Droplet size={20} className="log-type-icon" />
           Blood Sugar
         </button>
       </div>
@@ -97,7 +97,7 @@ function AddLogPage() {
       {/* Success */}
       {success && (
         <div className="log-success">
-          <IoCheckmarkCircle />
+          <CheckCircle size={18} />
           Reading saved successfully.
         </div>
       )}
@@ -106,7 +106,7 @@ function AddLogPage() {
       {selectedType === "BP" && (
         <div className="dashboard-card log-card">
           <div className="log-card-label">
-            <IoHeartOutline />
+            <Heart size={20} />
             Blood Pressure
           </div>
 
@@ -168,7 +168,7 @@ function AddLogPage() {
       {selectedType === "SUGAR" && (
         <div className="dashboard-card log-card">
           <div className="log-card-label">
-            <IoWaterOutline />
+            <Droplet size={20} />
             Blood Sugar
           </div>
 

@@ -1,36 +1,36 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
-  IoHeartOutline,
-  IoWaterOutline,
-  IoTrendingUpOutline,
-  IoTrendingDownOutline,
-  IoRemoveOutline,
-  IoChevronBackOutline,
-  IoAlertCircleOutline,
-} from "react-icons/io5";
+  Heart,
+  Droplet,
+  TrendingUp,
+  TrendingDown,
+  Minus,
+  ChevronLeft,
+  AlertCircle,
+} from "lucide-react";
 
 import { getMemberTrendSummary } from "../services/familyService";
 
 const TREND_CONFIG = {
   IMPROVING: {
     label: "Improving",
-    icon: <IoTrendingUpOutline />,
+    icon: <TrendingUp size={16} />,
     className: "improving",
   },
   WORSENING: {
     label: "Needs attention",
-    icon: <IoTrendingDownOutline />,
+    icon: <TrendingDown size={16} />,
     className: "worsening",
   },
   STABLE: {
     label: "Stable",
-    icon: <IoRemoveOutline />,
+    icon: <Minus size={16} />,
     className: "stable",
   },
   INSUFFICIENT_DATA: {
     label: "Not enough data yet",
-    icon: <IoAlertCircleOutline />,
+    icon: <AlertCircle size={16} />,
     className: "insufficient",
   },
 };
@@ -88,7 +88,7 @@ function MemberTrendPage() {
         style={{ marginBottom: 20 }}
         onClick={() => navigate(-1)}
       >
-        <IoChevronBackOutline /> Back
+        <ChevronLeft size={18} /> Back
       </button>
 
       {/* Member hero */}
@@ -105,7 +105,7 @@ function MemberTrendPage() {
         <h3 style={{ marginBottom: 16 }}>Current Trends</h3>
 
         <TrendRow
-          icon={<IoHeartOutline />}
+          icon={<Heart size={18} />}
           title="Blood Pressure"
           trendStatus={summary.bloodPressureTrend}
         />
@@ -113,7 +113,7 @@ function MemberTrendPage() {
         <div className="trend-row-divider" />
 
         <TrendRow
-          icon={<IoWaterOutline />}
+          icon={<Droplet size={18} />}
           title="Fasting Sugar"
           trendStatus={summary.fastingSugarTrend}
         />
@@ -121,7 +121,7 @@ function MemberTrendPage() {
         <div className="trend-row-divider" />
 
         <TrendRow
-          icon={<IoWaterOutline />}
+          icon={<Droplet size={18} />}
           title="Post Meal Sugar"
           trendStatus={summary.postMealSugarTrend}
         />

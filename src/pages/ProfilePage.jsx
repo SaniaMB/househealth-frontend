@@ -2,14 +2,13 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
-  IoTimeOutline,
-  IoNotificationsOutline,
-  IoLogOutOutline,
-  IoHeartOutline,
-  IoChevronForwardOutline,
-  IoShieldCheckmarkOutline,
-  IoCreateOutline,
-} from "react-icons/io5";
+  Heart,
+  Bell,
+  LogOut,
+  Shield,
+  ChevronRight,
+  Edit,
+} from "lucide-react";
 
 import {
   getUsersIObserve,
@@ -113,7 +112,7 @@ function ProfilePage() {
               className="edit-name-btn"
               onClick={() => setIsEditingName(true)}
             >
-              <IoCreateOutline />
+              <Edit size={16} />
               Edit Name
             </button>
           </>
@@ -124,7 +123,7 @@ function ProfilePage() {
       {/* Care circle */}
       <div className="dashboard-card care-circle-card">
         <div className="care-circle-heading">
-          <IoShieldCheckmarkOutline className="care-circle-icon" />
+          <Shield size={20} className="care-circle-icon" />
           <h3>Care Circle</h3>
         </div>
 
@@ -167,11 +166,11 @@ function ProfilePage() {
         >
           <div className="profile-menu-left">
             <div className="profile-menu-icon green">
-              <IoHeartOutline />
+              <Heart size={18} />
             </div>
             <span>Health History</span>
           </div>
-          <IoChevronForwardOutline className="profile-menu-chevron" />
+          <ChevronRight className="profile-menu-chevron" size={18} />
         </button>
 
         <div className="profile-menu-divider" />
@@ -182,17 +181,17 @@ function ProfilePage() {
         >
           <div className="profile-menu-left">
             <div className="profile-menu-icon blue">
-              <IoNotificationsOutline />
+              <Bell size={18} />
             </div>
             <span>Reminder Settings</span>
           </div>
-          <IoChevronForwardOutline className="profile-menu-chevron" />
+          <ChevronRight className="profile-menu-chevron" size={18} />
         </button>
       </div>
 
       {/* Logout */}
       <button className="profile-logout-btn" onClick={handleLogout}>
-        <IoLogOutOutline />
+        <LogOut size={18} />
         Log Out
       </button>
 

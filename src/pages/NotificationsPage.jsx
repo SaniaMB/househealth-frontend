@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import {
-  IoNotificationsOutline,
-  IoMailOpenOutline,
-  IoCheckmarkDoneOutline,
-  IoPersonAddOutline,
-} from "react-icons/io5";
+  Bell,
+  MailOpen,
+  CheckCircle2,
+  UserPlus,
+} from "lucide-react";
 
 import {
   getNotifications,
@@ -115,14 +115,14 @@ function NotificationsPage() {
       {pendingInvitations.length > 0 && (
         <div className="notif-section">
           <div className="notif-section-label">
-            <IoPersonAddOutline /> Pending Invitations
+            <UserPlus size={16} /> Pending Invitations
           </div>
 
           {pendingInvitations.map((inv) => (
             <div key={inv.invitationId} className="invitation-card">
               <div className="invitation-header">
                 <div className="notif-inv-icon">
-                  <IoPersonAddOutline />
+                  <UserPlus size={22} />
                 </div>
                 <div>
                   <h3>{inv.familyName}</h3>
@@ -158,7 +158,7 @@ function NotificationsPage() {
         <div className="notif-section">
           {pendingInvitations.length > 0 && (
             <div className="notif-section-label">
-              <IoNotificationsOutline />Activity
+              <Bell size={16} /> Activity
             </div>
           )}
 
@@ -171,7 +171,7 @@ function NotificationsPage() {
                 <div className="notif-dot-wrap">
                   {!n.read && <span className="notif-dot" />}
                   <div className="notif-icon-wrap">
-                    <IoNotificationsOutline />
+                    <Bell size={20} />
                   </div>
                 </div>
                 <div className="notif-card-content">
@@ -186,14 +186,14 @@ function NotificationsPage() {
                   className="notif-read-btn"
                   onClick={() => handleMarkAsRead(n.notificationId)}
                 >
-                  <IoCheckmarkDoneOutline />
+                  <CheckCircle2 size={16} />
                   Mark as read
                 </button>
               )}
 
               {n.read && (
                 <div className="notif-read-label">
-                  <IoMailOpenOutline /> Read
+                  <MailOpen size={14} /> Read
                 </div>
               )}
             </div>
