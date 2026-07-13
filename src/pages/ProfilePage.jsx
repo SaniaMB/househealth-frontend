@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import {
   IoTimeOutline,
   IoNotificationsOutline,
@@ -7,20 +8,23 @@ import {
   IoHeartOutline,
   IoChevronForwardOutline,
   IoShieldCheckmarkOutline,
+  IoCreateOutline,
 } from "react-icons/io5";
 
-import { getProfile } from "../services/profileService";
 import {
   getUsersIObserve,
   getMyObservers,
 } from "../services/careRelationshipService";
 
 import "../styles/profile.css";
+import { getProfile, updateName } from "../services/profileService";
 
 function ProfilePage() {
   const [profile, setProfile] = useState(null);
   const [peopleUnderMyCare, setPeopleUnderMyCare] = useState([]);
   const [myObservers, setMyObservers] = useState([]);
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [newName, setNewName] = useState("");
 
   const navigate = useNavigate();
 
@@ -35,6 +39,8 @@ function ProfilePage() {
         setProfile(profileData);
         setPeopleUnderMyCare(observedData);
         setMyObservers(observerData);
+        setProfile(profileData);
+        setNewName(profileData.name);
       } catch (error) {
         console.error(error);
       }
@@ -45,6 +51,17 @@ function ProfilePage() {
   function handleLogout() {
     localStorage.removeItem("token");
     navigate("/login");
+  }
+
+  async function handleSaveName() {
+    try {
+      const updatedProfile = await updateName(newName);
+
+      setProfile(updatedProfile);
+      setIsEditingName(false);
+    } catch (error) {
+      alert(error.message);
+    }
   }
 
   if (!profile) {
@@ -67,7 +84,40 @@ function ProfilePage() {
         <div className="profile-avatar-lg">
           {profile.name.charAt(0).toUpperCase()}
         </div>
-        <h2 className="profile-name">{profile.name}</h2>
+        {isEditingName ? (
+          <div className="profile-name-edit">
+            <input
+              value={newName}
+              onChange={(e) => setNewName(e.target.value)}
+              className="profile-name-input"
+            />
+
+            <div className="profile-name-actions">
+              <button onClick={handleSaveName}>Save</button>
+
+              <button
+                onClick={() => {
+                  setNewName(profile.name);
+                  setIsEditingName(false);
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        ) : (
+          <>
+            <h2 className="profile-name">{profile.name}</h2>
+
+            <button
+              className="edit-name-btn"
+              onClick={() => setIsEditingName(true)}
+            >
+              <IoCreateOutline />
+              Edit Name
+            </button>
+          </>
+        )}
         <p className="profile-email">{profile.email}</p>
       </div>
 

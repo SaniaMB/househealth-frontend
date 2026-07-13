@@ -146,12 +146,12 @@ function DashboardPage() {
           <p>Track trends and progress across your metrics.</p>
         </div>
 
-        <button
-          className="primary-btn"
-          onClick={handleDownloadReport}
-        >
-          Export Report
-        </button>
+       <button
+        className="export-report-btn"
+        onClick={handleDownloadReport}
+      >
+        Export PDF
+      </button>
 
       </div>
 

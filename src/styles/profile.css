@@ -166,3 +166,87 @@
   width: 110px;
   height: 12px;
 }
+
+/* ── Edit Name ───────────────────── */
+
+.edit-name-btn {
+  margin-top: 10px;
+  background: none;
+  border: none;
+  color: var(--hh-green);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.15s ease;
+}
+
+.edit-name-btn:hover {
+  color: var(--hh-green-deep);
+}
+
+.edit-name-btn svg {
+  font-size: 1rem;
+}
+
+/* ── Name Editing ────────────────── */
+
+.profile-name-input {
+  width: 100%;
+  max-width: 280px;
+  padding: 10px 14px;
+  margin-top: 6px;
+  border: 1px solid var(--hh-border);
+  border-radius: 12px;
+  outline: none;
+  background: #fff;
+  color: var(--hh-text);
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.profile-name-input:focus {
+  border-color: var(--hh-green);
+  box-shadow: 0 0 0 3px rgba(61, 181, 98, 0.12);
+}
+
+/* ── Save / Cancel ───────────────── */
+
+.profile-name-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.profile-name-actions button {
+  padding: 8px 18px;
+  border-radius: 10px;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.profile-name-actions button:first-child {
+  background: var(--hh-green);
+  color: #fff;
+}
+
+.profile-name-actions button:first-child:hover {
+  background: var(--hh-green-deep);
+}
+
+.profile-name-actions button:last-child {
+  background: var(--hh-bg);
+  color: var(--hh-text);
+}
+
+.profile-name-actions button:last-child:hover {
+  background: #eceff1;
+}

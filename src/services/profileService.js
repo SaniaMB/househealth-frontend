@@ -16,3 +16,23 @@ export async function getProfile() {
 
   return response.json();
 }
+
+export async function updateName(name) {
+  const response = await fetch(
+    `${API_BASE_URL}/api/users/me/name`,
+    {
+      method: "PATCH",
+      headers: getAuthHeaders(),
+      body: JSON.stringify({
+        name,
+      }),
+    }
+  );
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message);
+  }
+
+  return response.json();
+}

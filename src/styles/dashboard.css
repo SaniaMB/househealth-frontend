@@ -345,3 +345,29 @@
   height: 1px;
   background: var(--hh-border);
 }
+
+.export-report-btn {
+  background: white;
+  color: #3db562;
+  border: 1px solid #3db562;
+
+  padding: 0.55rem 0.9rem;
+
+  border-radius: 10px;
+
+  font-size: 0.88rem;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.export-report-btn:hover {
+  background: #f3fbf5;
+  transform: translateY(-1px);
+}
+
+.export-report-btn:active {
+  transform: translateY(0);
+}
