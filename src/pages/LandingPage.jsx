@@ -1,16 +1,16 @@
 import { Link } from "react-router-dom";
 import {
-  IoHeartOutline,
-  IoPeopleOutline,
-  IoBarChartOutline,
-} from "react-icons/io5";
+  Heart,
+  Users,
+  TrendingUp,
+} from "lucide-react";
 
 import "../styles/landing.css";
 
 const FEATURES = [
-  { icon: <IoHeartOutline />, label: "Track symptoms" },
-  { icon: <IoPeopleOutline />, label: "Share with family" },
-  { icon: <IoBarChartOutline />, label: "Get insights" },
+  { icon: <Heart size={18} />, label: "Track health" },
+  { icon: <Users size={18} />, label: "Share with family" },
+  { icon: <TrendingUp size={18} />, label: "Get insights" },
 ];
 
 const STEPS = [

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { IoNotificationsOutline } from "react-icons/io5";
+import { Bell } from "lucide-react";
 
 import { getProfile } from "../../services/profileService";
 import { getUnreadNotifications } from "../../services/notificationService";
@@ -61,7 +61,7 @@ function AppHeader({ scrolled }) {
           onClick={() => navigate("/notifications")}
           aria-label="Notifications"
         >
-          <IoNotificationsOutline />
+          <Bell size={20} />
           {unreadCount > 0 && (
             <span className="notification-badge">
               {unreadCount > 9 ? "9+" : unreadCount}

@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import {
-  IoMailOutline,
-  IoLockClosedOutline,
-  IoEyeOutline,
-  IoEyeOffOutline,
-  IoLeafOutline,
-} from "react-icons/io5";
+  Mail,
+  Lock,
+  Eye,
+  EyeOff,
+  Leaf,
+} from "lucide-react";
 
 import { loginUser } from "../../services/authService";
 import { getErrorMessage } from "../../utils/errorUtils";
@@ -54,7 +54,7 @@ function LoginPage() {
 
         <div className="auth-logo">
           <div className="auth-logo-icon">
-            <IoLeafOutline />
+            <Leaf size={22} />
           </div>
 
           <h1 className="auth-title">
@@ -74,7 +74,7 @@ function LoginPage() {
             <label htmlFor="email">Email</label>
 
             <div className="auth-input-wrap">
-              <IoMailOutline className="auth-input-icon" />
+              <Mail className="auth-input-icon" size={20} />
 
               <input
                 id="email"
@@ -92,7 +92,7 @@ function LoginPage() {
             <label htmlFor="password">Password</label>
 
             <div className="auth-input-wrap">
-              <IoLockClosedOutline className="auth-input-icon" />
+              <Lock className="auth-input-icon" size={20} />
 
               <input
                 id="password"
@@ -110,7 +110,7 @@ function LoginPage() {
                 aria-label={showPassword ? "Hide password" : "Show password"}
                 onClick={() => setShowPassword((v) => !v)}
               >
-                {showPassword ? <IoEyeOffOutline /> : <IoEyeOutline />}
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
               </button>
             </div>
 

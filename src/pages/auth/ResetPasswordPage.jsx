@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import {
-  IoLockClosedOutline,
-  IoEyeOutline,
-  IoEyeOffOutline,
-  IoLeafOutline,
-} from "react-icons/io5";
+  Lock,
+  Eye,
+  EyeOff,
+  Leaf,
+} from "lucide-react";
 
 import { resetPassword } from "../../services/authService";
 import { getErrorMessage } from "../../utils/errorUtils";
@@ -80,7 +80,7 @@ function ResetPasswordPage() {
 
           <div className="auth-logo">
             <div className="auth-logo-icon">
-              <IoLeafOutline />
+              <Leaf size={22} />
             </div>
 
             <h1 className="auth-title">
@@ -118,7 +118,7 @@ function ResetPasswordPage() {
         <div className="auth-logo">
 
           <div className="auth-logo-icon">
-            <IoLeafOutline />
+            <Leaf size={22} />
           </div>
 
           <h1 className="auth-title">
@@ -150,7 +150,7 @@ function ResetPasswordPage() {
 
             <div className="auth-input-wrap">
 
-              <IoLockClosedOutline className="auth-input-icon" />
+              <Lock className="auth-input-icon" size={20} />
 
               <input
                 id="password"
@@ -172,8 +172,8 @@ function ResetPasswordPage() {
                 }
               >
                 {showPassword
-                  ? <IoEyeOffOutline />
-                  : <IoEyeOutline />}
+                  ? <EyeOff size={20} />
+                  : <Eye size={20} />}
               </button>
 
             </div>
@@ -188,7 +188,7 @@ function ResetPasswordPage() {
 
             <div className="auth-input-wrap">
 
-              <IoLockClosedOutline className="auth-input-icon" />
+              <Lock className="auth-input-icon" size={20} />
 
               <input
                 id="confirmPassword"
@@ -216,8 +216,8 @@ function ResetPasswordPage() {
                 }
               >
                 {showConfirmPassword
-                  ? <IoEyeOffOutline />
-                  : <IoEyeOutline />}
+                  ? <EyeOff size={20} />
+                  : <Eye size={20} />}
               </button>
 
             </div>

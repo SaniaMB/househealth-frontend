@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  IoMailOutline,
-  IoLeafOutline,
-} from "react-icons/io5";
+  Mail,
+  Leaf,
+} from "lucide-react";
 
 import { forgotPassword } from "../../services/authService";
 import { getErrorMessage } from "../../utils/errorUtils";
@@ -42,7 +42,7 @@ function ForgotPasswordPage() {
 
           <div className="auth-logo">
             <div className="auth-logo-icon">
-              <IoLeafOutline />
+              <Leaf size={22} />
             </div>
 
             <h1 className="auth-title">
@@ -90,7 +90,7 @@ function ForgotPasswordPage() {
 
         <div className="auth-logo">
           <div className="auth-logo-icon">
-            <IoLeafOutline />
+            <Leaf size={22} />
           </div>
 
           <h1 className="auth-title">
@@ -121,7 +121,7 @@ function ForgotPasswordPage() {
 
             <div className="auth-input-wrap">
 
-              <IoMailOutline className="auth-input-icon" />
+              <Mail className="auth-input-icon" size={20} />
 
               <input
                 id="email"
