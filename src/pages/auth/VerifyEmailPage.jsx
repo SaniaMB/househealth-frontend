@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate, Link } from "react-router-dom";
 import { CheckCircle, AlertCircle, Loader, Leaf } from "lucide-react";
-import axios from "axios";
+import { verifyEmail } from "../../services/authService";
 
 function VerifyEmailPage() {
   const [searchParams] = useSearchParams();
@@ -11,52 +11,42 @@ function VerifyEmailPage() {
   const [success, setSuccess] = useState(false);
   const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    const verifyEmail = async () => {
-      const token = searchParams.get("token");
+useEffect(() => {
+       const handleVerification = async () => {
+        const token = searchParams.get("token");
 
-      if (!token) {
-        setLoading(false);
-        setMessage("Verification token is missing.");
-        return;
-      }
-
-      try {
-        const response = await axios.post(
-          "http://localhost:8080/api/auth/verify",
-          {
-            token,
-          }
-        );
-
-        localStorage.setItem(
-          "token",
-          response.data.token
-        );
-
-        setSuccess(true);
-        setMessage(
-          response.data.message
-        );
-
-        setTimeout(() => {
-          navigate("/feed");
-        }, 2000);
-      } catch (error) {
-        setSuccess(false);
-
-        if (error.response?.data?.message) {
-          setMessage(error.response.data.message);
-        } else {
-          setMessage("Failed to verify email.");
+        if (!token) {
+          setLoading(false);
+          setMessage("Verification token is missing.");
+          return;
         }
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    verifyEmail();
-  }, [searchParams, navigate]);
+        try {
+          const response = await verifyEmail(token);
+
+          localStorage.setItem("token", response.token);
+
+          setSuccess(true);
+          setMessage(response.message);
+
+          setTimeout(() => {
+            navigate("/feed");
+          }, 2000);
+        } catch (error) {
+          setSuccess(false);
+
+          if (error.message) {
+            setMessage(error.message);
+          } else {
+            setMessage("Failed to verify email.");
+          }
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      handleVerification();
+    }, [searchParams, navigate]);
 
   if (loading) {
     return (
