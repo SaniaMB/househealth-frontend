@@ -94,3 +94,24 @@ export async function resetPassword(token, password) {
 
   return response.json();
 }
+
+export async function verifyEmail(token) {
+  const response = await fetch(
+    `${API_BASE_URL}/api/auth/verify`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ token }),
+    }
+  );
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message);
+  }
+
+  return data;
+}
