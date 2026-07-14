@@ -1,6 +1,6 @@
-# 🏠 HouseHealth Frontend
-
 <div align="center">
+
+<h1>🏠 HouseHealth Frontend</h1>
 
 **A modern React application providing an intuitive and responsive interface for HouseHealth, enabling users to securely monitor health metrics, collaborate with family members, and manage their healthcare in one place.**
 
